@@ -12,6 +12,10 @@
         <module>task-service</module> 
         <module>user-service</module>
     </modules>
+    
+    <dependencyManagement>
+    ...
+    </dependencyManagement>
 ```
 
 2. зависимости модулей pom.xml (наследование):
@@ -23,3 +27,4 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 ```
+3. 
