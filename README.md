@@ -27,4 +27,9 @@
         <version>0.0.1-SNAPSHOT</version>
     </parent>
 ```
-3. 
+3. подключение maven-зависимостей в родительский pom.xml из maven-repository:
+    * lombok;
+    * postgreSQL;
+    * flyway;
+    * kafka;
+    * docker;
