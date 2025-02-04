@@ -30,6 +30,9 @@
 3. подключение maven-зависимостей в родительский pom.xml из maven-repository:
     * lombok;
     * postgreSQL;
+    * jdbc;
+    * h2;
+    * data jpa;
     * flyway;
-    * kafka;
-    * docker;
+    * springdoc-openai-starter-webmvc-ui; (swagger)
+    * kafka (spring-boot-starter-kafka + для тестирования spring-kafka-test);
