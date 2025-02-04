@@ -1,13 +1,13 @@
-package org.abramov.spring.testovoe;
+package org.abramov.spring.testovoe.taskservice;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class TestovoeApplication {
+public class TaskServiceApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TestovoeApplication.class, args);
+        SpringApplication.run(TaskServiceApplication.class, args);
     }
 
 }

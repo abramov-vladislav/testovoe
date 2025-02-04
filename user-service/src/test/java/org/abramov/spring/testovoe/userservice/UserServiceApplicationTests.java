@@ -1,10 +1,10 @@
-package org.abramov.spring.testovoe;
+package org.abramov.spring.testovoe.userservice;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class TestovoeApplicationTests {
+class UserServiceApplicationTests {
 
     @Test
     void contextLoads() {
