@@ -5,5 +5,4 @@ import java.util.UUID;
 
 public interface UserService {
     User getUserByUserId(UUID userId);
-
 }
