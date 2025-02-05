@@ -36,3 +36,16 @@
     * flyway;
     * springdoc-openai-starter-webmvc-ui; (swagger)
     * kafka (spring-boot-starter-kafka + для тестирования spring-kafka-test);
+
+4. создать сущности (model): User, Task с аннотациями:
+   @Setter
+   @Getter
+   @AllArgsConstructor
+   @NoArgsConstructor
+
+5. реализовать интерфейсы (service): UserService, TaskService:
+   User getUserById(UUID userId);
+   Task getTask(UUID taskId);
+
+6. реализовать контроллеры (controller): UserController, TaskController:
+

@@ -1,4 +1,4 @@
 package org.abramov.spring.testovoe.userservice.repository;
 
-public class UserRepository {
+public interface UserRepository {
 }
