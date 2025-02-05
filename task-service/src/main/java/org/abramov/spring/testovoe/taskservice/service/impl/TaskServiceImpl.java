@@ -5,8 +5,6 @@ import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.abramov.spring.testovoe.userservice.model.User;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -16,7 +14,6 @@ import java.util.UUID;
 public class TaskServiceImpl implements TaskService {
 
     private final TaskRepository taskRepository;
-    private final RestTemplate restTemplate;
 
     @Override
     public Task getTaskByTaskId(UUID taskId) {
@@ -86,7 +83,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public User getUserById(UUID userId) {
         // Взаимодействие с UserService для получения пользователя
-        return restTemplate.getForObject("http://user-service/users/" + userId, User.class);
+        return null;
     }
 
     @Override
@@ -95,4 +92,3 @@ public class TaskServiceImpl implements TaskService {
     }
 }
 
-}
