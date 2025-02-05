@@ -1,13 +1,10 @@
 package org.abramov.spring.testovoe.taskservice.controller;
-
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.taskservice.model.Task;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.abramov.spring.testovoe.userservice.model.User;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 import java.util.UUID;
 
