@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -22,4 +23,11 @@ public class TaskController {
         final var task = taskService.getTaskByTaskId(taskId);
         return ResponseEntity.ok(task);
     }
+
+    @GetMapping("/{tasks}")
+    public List<Task> getAllTasks() {
+        return taskService.getAllTasks();
+    }
+    
+
 }

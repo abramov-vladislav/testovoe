@@ -1,11 +1,14 @@
 package org.abramov.spring.testovoe.userservice.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.UUID;
 
 //DTO (Data Transfer Objects) – объекты для передачи данных
 @Data
 @AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
     private UUID userId;
     private String userLogin;
@@ -19,4 +22,5 @@ public class UserDTO {
                 user.getUserLastName() + " " + user.getUserName() // Объединяем фамилию и имя
         );
     }
+
 }
