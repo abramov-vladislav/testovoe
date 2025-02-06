@@ -11,15 +11,15 @@ import java.util.UUID;
 @NoArgsConstructor
 public class UserDTO {
     private UUID userId;
-    private String userLogin;
+    private String username;
     private String fullName; // Конкатенация фамилии и имени
 
     // Метод преобразования User в UserDto
     public static UserDTO from(org.abramov.spring.testovoe.userservice.model.User user) {
         return new UserDTO(
                 user.getUserId(),
-                user.getUserLogin(),
-                user.getUserLastName() + " " + user.getUserName() // Объединяем фамилию и имя
+                user.getUsername(),
+                user.getUserLastName() + " " + user.getUserFirstName() // Объединяем фамилию и имя
         );
     }
 

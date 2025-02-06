@@ -1,5 +1,8 @@
 package org.abramov.spring.testovoe.userservice.model;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -9,14 +12,19 @@ import java.util.UUID;
 //сущность
 @Setter
 @Getter
+@Entity
+@Table(name = "users")
 @AllArgsConstructor
 @NoArgsConstructor
 public class User {
     //свойства пользователя
+
+    @Id
     private UUID userId;
-    private String userLogin;
+
+    private String username;
     private String userLastName;
-    private String userName;
+    private String userFirstName;
 }
 /*
 Класс User содержит нужные поля.

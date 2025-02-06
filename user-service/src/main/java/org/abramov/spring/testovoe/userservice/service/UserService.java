@@ -1,10 +1,12 @@
 package org.abramov.spring.testovoe.userservice.service;
 
 import org.abramov.spring.testovoe.userservice.model.User;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public interface UserService {
 
     // Получить всех пользователей

@@ -28,8 +28,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUserByUserLogin(String userLogin) {
-        return (User) userRepository.findByUserLogin(userLogin)
+    public User getUserByUserLogin(String username) {
+        return (User) userRepository.findByUsername(username)
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
