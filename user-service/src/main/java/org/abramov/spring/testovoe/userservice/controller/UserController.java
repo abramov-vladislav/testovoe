@@ -11,3 +11,11 @@ public class UserController {
     private final UserService userService;
 
 }
+
+/*
+UserController пока только с заготовкой, без методов.
+Рекомендации:
+
+Добавь методы для каждого REST эндпоинта (получение пользователей, получение по ID/логину, обновление).
+Не забудь добавить документацию Swagger (например, с использованием springdoc-openapi или springfox).
+ */
