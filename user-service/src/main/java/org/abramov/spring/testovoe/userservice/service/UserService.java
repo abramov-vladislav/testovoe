@@ -18,4 +18,6 @@ public interface UserService {
 
     // Редактировать пользователя, при редактировании указываются свойства: логин, фамилия, имя
     User updateUser(String userLogin, String userLastName, String userFirstName);
+
+    User createUser(User user);
 }
