@@ -27,11 +27,6 @@ public class UserServiceImpl implements UserService {
                 .orElseThrow(() -> new RuntimeException("User not found"));
     }
 
-    @Override
-    public User getUserByUserLogin(String username) {
-        return (User) userRepository.findByUsername(username)
-                .orElseThrow(() -> new RuntimeException("User not found"));
-    }
 
     @Override
     public User updateUser(String userLogin, String userLastName, String userFirstName) {
