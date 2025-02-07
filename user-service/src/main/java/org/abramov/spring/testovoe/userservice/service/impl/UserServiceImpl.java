@@ -39,6 +39,11 @@ public class UserServiceImpl implements UserService {
         // Например, получите пользователя по id, измените поля и сохраните в репозиторий.
         return null;
     }
+
+    @Override
+    public User createUser(User user) {
+        return null;
+    }
 }
 
 /*

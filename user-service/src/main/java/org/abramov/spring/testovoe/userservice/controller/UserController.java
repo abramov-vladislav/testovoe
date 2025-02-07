@@ -5,6 +5,7 @@ import org.abramov.spring.testovoe.userservice.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/user")
@@ -20,7 +21,7 @@ public class UserController {
 
     // Получить пользователя по id: GET http://localhost:8080/users/1
     @GetMapping("/{id}")
-    public User getUserByUserId(@PathVariable Long id) {
+    public User getUserByUserId(@PathVariable UUID id) {
         return userService.getUserByUserId(id);
     }
 
