@@ -16,15 +16,15 @@ import java.util.UUID;
 public class TaskController {
     private final TaskService taskService;
 
-    @GetMapping("/{tasks}")
-    public List<Task> getAllTasks(@PathVariable String tasks) {
-        return taskService.getAllTasks();
-    }
-
     @GetMapping("/{taskId}")
     public ResponseEntity<Task> getTaskByTaskId(@PathVariable UUID taskId) {
         Task task = taskService.getTaskByTaskId(taskId);
         return ResponseEntity.ok(task);
+    }
+
+    @GetMapping
+    public List<TaskDTO> getAllTasks(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        return taskService.getAllTasks();
     }
 
     @PostMapping("/name/{taskName}")
