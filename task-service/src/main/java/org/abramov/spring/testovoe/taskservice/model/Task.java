@@ -13,7 +13,6 @@ import java.util.UUID;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Task {
-
     private UUID taskId;
     private String taskName;
     private UUID taskOwnerId; //владелец - пользователь
@@ -21,5 +20,4 @@ public class Task {
     private TaskStatus taskStatus; //статус - значение из множества (новое, назначено, в работе, выполнено)
     private LocalDateTime taskCreateDate; //дата и время создания
     private LocalDateTime taskUpdateDate; //дата и время последнего изменения
-
 }

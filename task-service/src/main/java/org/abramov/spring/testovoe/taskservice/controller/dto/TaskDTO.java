@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @Data
 public class TaskDTO {
-
     private UUID taskId;
     private String taskName;
     private UUID taskOwnerId; //владелец - пользователь

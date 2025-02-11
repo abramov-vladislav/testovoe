@@ -7,6 +7,7 @@ import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/task")
@@ -14,11 +15,20 @@ import java.util.List;
 public class TaskController {
     private final TaskService taskService;
 
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<List<TaskDTO>> getAllTasks(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var tasks = taskService.getAllTasks(pageNumber, pageSize);
         final var taskDTOList = tasks.stream().map(task -> TaskMapper.toTaskDTO(task)).toList();
+
         return ResponseEntity.ok(taskDTOList);
     }
+
+    @GetMapping("/{taskId}")
+    public ResponseEntity<TaskDTO> getTaskById(@RequestParam UUID taskId) {
+        final var task = taskService.getTaskByTaskId(taskId);
+
+        return ResponseEntity.ok(TaskMapper.toTaskDTO(task));
+    }
+
 
 }

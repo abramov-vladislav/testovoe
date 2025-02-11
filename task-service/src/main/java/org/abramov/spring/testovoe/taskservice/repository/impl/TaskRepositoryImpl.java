@@ -7,12 +7,8 @@ import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
-
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
@@ -53,5 +49,18 @@ public class TaskRepositoryImpl implements TaskRepository {
         final var types = new int[]{ Types.INTEGER, Types.INTEGER };
 
         return Objects.requireNonNull(jdbcTemplate.query(sql, args, types, taskExtractor));
+    }
+
+    @Override
+    public Optional<Task> getTaskByTaskId(UUID taskId) {
+        final var sql = """
+                SELECT *
+                FROM tasks
+                WHERE task_id = ?
+                """;
+        final var args = new Object[]{ taskId };
+        final var tasks = Objects.requireNonNull(jdbcTemplate.query(sql, args, taskExtractor));
+
+        return tasks.isEmpty() ? Optional.empty() : Optional.of(tasks.getFirst());
     }
 }
