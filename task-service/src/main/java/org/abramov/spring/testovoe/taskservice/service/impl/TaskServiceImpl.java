@@ -1,5 +1,6 @@
 package org.abramov.spring.testovoe.taskservice.service.impl;
 import lombok.RequiredArgsConstructor;
+import org.abramov.spring.testovoe.taskservice.controller.enumController.TaskStatus;
 import org.abramov.spring.testovoe.taskservice.model.Task;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
@@ -19,6 +20,11 @@ public class TaskServiceImpl implements TaskService {
     public Task getTaskByTaskId(UUID taskId) {
         return taskRepository.findByTaskId(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
+    }
+
+    @Override
+    public Task getTaskByTask(String taskName) {
+        return null;
     }
 
     @Override
@@ -62,11 +68,11 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task changeTaskStatus(UUID taskId, Task.TaskStatus status) {
+    public Task changeTaskStatus(UUID taskId, TaskStatus taskStatus) {
         Task task = taskRepository.findByTaskId(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
-        task.setTaskStatus(status);
+        task.setTaskStatus(taskStatus);
         task.setTaskUpdateDate(LocalDateTime.now());
 
         return taskRepository.save(task);  // Обновляем статус задачи

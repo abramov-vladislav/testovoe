@@ -1,5 +1,7 @@
 package org.abramov.spring.testovoe.taskservice.controller;
 import lombok.RequiredArgsConstructor;
+import org.abramov.spring.testovoe.taskservice.controller.dto.TaskDTO;
+import org.abramov.spring.testovoe.taskservice.controller.enumController.TaskStatus;
 import org.abramov.spring.testovoe.taskservice.model.Task;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.abramov.spring.testovoe.userservice.model.User;
@@ -25,29 +27,28 @@ public class TaskController {
         return ResponseEntity.ok(task);
     }
 
-    @GetMapping("/name/{taskName}")
-    public ResponseEntity<Task> createTask(@PathVariable String taskName) {
-        final var task = taskService.getTaskByTaskName(taskName);
+    @PostMapping("/name/{taskName}")
+    public ResponseEntity<Task> createTask(@PathVariable TaskDTO taskDTO) {
+        final var taskId = UUID.randomUUID();
+        final var task = taskService.createTask(
+                taskId
+//ДОПОЛНИТЬ
+        );
         return ResponseEntity.ok(task);
     }
 
     @GetMapping("/owner/{taskId}")
-    public ResponseEntity<Task> getTasksByOwner(@PathVariable UUID userId, @PathVariable String taskId) {
+    public ResponseEntity<Task> getTasksByOwnerId(@PathVariable UUID userId, @PathVariable String taskId) {
         List<Task> tasks = taskService.getTasksByOwner(userId);
         return ResponseEntity.ok((Task) tasks);
     }
 
     @GetMapping("/executor/{taskId}")
-    public ResponseEntity<Task> getTasksByExecutor(@PathVariable UUID userId, @PathVariable String taskId) {
+    public ResponseEntity<Task> getTasksByExecutorId(@PathVariable UUID userId, @PathVariable String taskId) {
         final var tasks = taskService.getTasksByExecutor(userId);
         return ResponseEntity.ok((Task) tasks);
     }
 
-    @PostMapping
-    public Task createTask(@RequestBody Task task) {
-        Task createdTask = taskService.createTask(task);
-        return createdTask;
-    }
 
     @PutMapping("/{taskId}")
     public ResponseEntity<Task> updateTask(@RequestBody UUID taskId, @RequestBody Task task) {
@@ -56,8 +57,8 @@ public class TaskController {
     }
 
     @PatchMapping("/{taskId}/status")
-    public ResponseEntity<Task> changeTaskStatus(@PathVariable UUID taskId, @RequestBody Task.TaskStatus status) {
-        Task updatedTask = taskService.changeTaskStatus(taskId, status);
+    public ResponseEntity<Task> changeTaskStatus(@PathVariable UUID taskId, @RequestBody TaskStatus taskStatus) {
+        Task updatedTask = taskService.changeTaskStatus(taskId, taskStatus);
         return ResponseEntity.ok(updatedTask);
     }
 
@@ -68,7 +69,7 @@ public class TaskController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<User> getUserById(@PathVariable UUID userId) {
+    public ResponseEntity<User> getUserByUserId(@PathVariable UUID userId) {
         User user = taskService.getUserById(userId);
         return ResponseEntity.ok(user);
     }

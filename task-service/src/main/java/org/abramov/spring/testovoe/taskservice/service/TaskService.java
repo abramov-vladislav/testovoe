@@ -1,4 +1,5 @@
 package org.abramov.spring.testovoe.taskservice.service;
+import org.abramov.spring.testovoe.taskservice.controller.enumController.TaskStatus;
 import org.abramov.spring.testovoe.taskservice.model.Task;
 import org.abramov.spring.testovoe.userservice.model.User;
 
@@ -14,6 +15,8 @@ public interface TaskService {
     Task getTaskByTaskId(UUID taskId);
 
     // Получить задачу по названию
+    Task getTaskByTask(String taskName);
+
     Task getTaskByTaskName(String taskName);
 
     // Получить все задачи, где текущий пользователь является владельцем
@@ -29,7 +32,7 @@ public interface TaskService {
     Task updateTask(UUID taskId, Task task);
 
     // Изменить статус задачи
-    Task changeTaskStatus(UUID taskId, Task.TaskStatus status);
+    Task changeTaskStatus(UUID taskId, TaskStatus taskStatus);
 
     // Удалить задачу
     void deleteTask(UUID taskId);
