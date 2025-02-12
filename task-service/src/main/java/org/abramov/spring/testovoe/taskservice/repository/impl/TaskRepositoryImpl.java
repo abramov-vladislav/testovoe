@@ -63,4 +63,22 @@ public class TaskRepositoryImpl implements TaskRepository {
 
         return tasks.isEmpty() ? Optional.empty() : Optional.of(tasks.getFirst());
     }
+
+    @Override
+    public Task createTask(Task task) {
+        return null;
+        //
+         //
+         //
+         //
+    }
+
+    @Override
+    public Task updateTask(Task task) {
+        return null;
+        //
+        //
+        //
+        //
+    }
 }

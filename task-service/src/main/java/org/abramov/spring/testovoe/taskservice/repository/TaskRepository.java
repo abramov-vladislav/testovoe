@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface TaskRepository {
     List<Task> getAllTasks(Integer pageNumber, Integer pageSize);
     Optional<Task> getTaskByTaskId(UUID taskId);
+    Task createTask(Task task);
+    Task updateTask(Task task);
 }

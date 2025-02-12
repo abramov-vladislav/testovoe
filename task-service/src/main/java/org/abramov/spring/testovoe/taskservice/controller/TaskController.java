@@ -30,5 +30,34 @@ public class TaskController {
         return ResponseEntity.ok(TaskMapper.toTaskDTO(task));
     }
 
+    @PostMapping
+    public ResponseEntity<TaskDTO> createTask(@RequestBody TaskDTO taskDTO) {
+        UUID taskId = UUID.randomUUID();
+        final var task = taskService.createTask(
+                taskId,
+                taskDTO.getTaskName(),
+                taskDTO.getTaskOwnerId(),
+                taskDTO.getTaskExecutorId(),
+                taskDTO.getTaskStatus(),
+                taskDTO.getTaskCreateDate(),
+                taskDTO.getTaskUpdateDate()
+        );
+        return ResponseEntity.ok(TaskMapper.toTaskDTO(task));
+    }
+
+    @PostMapping("/{co")
+    public ResponseEntity<TaskDTO> updateTask(@PathVariable UUID taskId, @RequestBody TaskDTO taskDTO) {
+        final var task = taskService.updateTask(
+                taskId,
+                taskDTO.getTaskName(),
+                taskDTO.getTaskOwnerId(),
+                taskDTO.getTaskExecutorId(),
+                taskDTO.getTaskStatus(),
+                taskDTO.getTaskCreateDate(),
+                taskDTO.getTaskUpdateDate()
+        );
+        return ResponseEntity.ok(TaskMapper.toTaskDTO(task));
+    }
+
 
 }
