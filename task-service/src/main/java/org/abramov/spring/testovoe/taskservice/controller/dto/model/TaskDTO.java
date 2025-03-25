@@ -1,4 +1,4 @@
-package org.abramov.spring.testovoe.taskservice.controller.dto;
+package org.abramov.spring.testovoe.taskservice.controller.dto.response;
 
 import lombok.Data;
 import org.abramov.spring.testovoe.taskservice.controller.enumController.TaskStatus;
