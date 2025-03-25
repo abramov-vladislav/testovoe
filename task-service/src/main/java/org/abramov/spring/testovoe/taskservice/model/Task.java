@@ -4,7 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.abramov.spring.testovoe.taskservice.controller.enumController.TaskStatus;
+import org.abramov.spring.testovoe.taskservice.controller.enums.TaskStatus;
 import java.time.LocalDateTime;
 import java.util.UUID;
 

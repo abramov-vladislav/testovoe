@@ -1,14 +1,14 @@
-package org.abramov.spring.testovoe.taskservice.controller.dto.response;
+package org.abramov.spring.testovoe.taskservice.controller.dto.request;
 
 import lombok.Data;
-import org.abramov.spring.testovoe.taskservice.controller.enumController.TaskStatus;
+import org.abramov.spring.testovoe.taskservice.controller.enums.TaskStatus;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
 
 @Data
-public class TaskDTO {
-    private UUID taskId;
+public class UpdateTaskDTO {
     private String taskName;
     private UUID taskOwnerId; //владелец - пользователь
     private UUID taskExecutorId; //исполнитель - пользователь

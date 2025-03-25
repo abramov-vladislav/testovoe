@@ -1,7 +1,7 @@
-package org.abramov.spring.testovoe.taskservice.controller.dto.response;
+package org.abramov.spring.testovoe.taskservice.controller.dto.model;
 
 import lombok.Data;
-import org.abramov.spring.testovoe.taskservice.controller.enumController.TaskStatus;
+import org.abramov.spring.testovoe.taskservice.controller.enums.TaskStatus;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
