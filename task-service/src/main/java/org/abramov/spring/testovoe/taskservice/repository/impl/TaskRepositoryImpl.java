@@ -2,7 +2,7 @@ package org.abramov.spring.testovoe.taskservice.repository.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.taskservice.controller.enums.TaskStatus;
-import org.abramov.spring.testovoe.taskservice.model.Task;
+import org.abramov.spring.testovoe.taskservice.entity.Task;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;

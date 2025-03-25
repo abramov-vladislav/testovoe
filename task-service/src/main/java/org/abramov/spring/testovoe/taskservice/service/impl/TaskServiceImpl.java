@@ -2,7 +2,7 @@ package org.abramov.spring.testovoe.taskservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.taskservice.controller.enums.TaskStatus;
-import org.abramov.spring.testovoe.taskservice.model.Task;
+import org.abramov.spring.testovoe.taskservice.entity.Task;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.springframework.stereotype.Service;

@@ -1,6 +1,6 @@
 package org.abramov.spring.testovoe.userservice.service.impl;
 import lombok.RequiredArgsConstructor;
-import org.abramov.spring.testovoe.userservice.model.User;
+import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
 import org.abramov.spring.testovoe.userservice.service.UserService;
 import org.springframework.stereotype.Service;
@@ -14,8 +14,6 @@ public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
 
-
-    //ИСПРАВИТЬ НИЖЕ ВСЕ
     @Override
     public List<User> getAllUsers() {
         return userRepository.findAll();
@@ -24,25 +22,24 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserId(UUID userId) {
         return userRepository.findByUserId(userId)
-                .orElseThrow(() -> new RuntimeException("User not found"));
+                .orElseThrow(() -> new RuntimeException("Пользователь не может быть найден"));
     }
 
-
     @Override
-    public User updateUser(String userLogin, String userLastName, String userFirstName) {
-        // Здесь добавьте логику обновления и проверки уникальности логина
-        // Например, получите пользователя по id, измените поля и сохраните в репозиторий.
+    public User getUserByUsername(String username) {
         return null;
     }
 
     @Override
-    public User createUser(User user) {
+    public User updateUser(User user) {
+
         return null;
+    }
+
+    /**
+         * При редактировании запрос может быть отклонен,
+         * если новый логин (username) не является старым и при этом он не уникален
+         */
     }
 }
 
-/*
-Необходимо реализовать логику взаимодействия с репозиторием, валидацию уникальности логина
-и обработку исключительных ситуаций (например, пользователь не найден или новый логин уже занят).
-При обновлении, если новый логин отличается от старого, нужно проверить его уникальность в базе.
- */

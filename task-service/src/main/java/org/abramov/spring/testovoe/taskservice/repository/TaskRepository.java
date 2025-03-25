@@ -1,6 +1,6 @@
 package org.abramov.spring.testovoe.taskservice.repository;
 
-import org.abramov.spring.testovoe.taskservice.model.Task;
+import org.abramov.spring.testovoe.taskservice.entity.Task;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
