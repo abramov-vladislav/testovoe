@@ -1,6 +1,6 @@
 package org.abramov.spring.testovoe.taskservice.service;
 
-import org.abramov.spring.testovoe.taskservice.controller.enumController.TaskStatus;
+import org.abramov.spring.testovoe.taskservice.controller.enums.TaskStatus;
 import org.abramov.spring.testovoe.taskservice.model.Task;
 
 import java.time.LocalDateTime;

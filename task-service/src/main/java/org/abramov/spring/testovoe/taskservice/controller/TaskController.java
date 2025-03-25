@@ -1,7 +1,7 @@
 package org.abramov.spring.testovoe.taskservice.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.abramov.spring.testovoe.taskservice.controller.dto.TaskDTO;
+import org.abramov.spring.testovoe.taskservice.controller.dto.model.TaskDTO;
 import org.abramov.spring.testovoe.taskservice.controller.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.springframework.http.ResponseEntity;
