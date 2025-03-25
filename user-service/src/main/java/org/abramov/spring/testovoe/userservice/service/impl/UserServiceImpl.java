@@ -40,6 +40,5 @@ public class UserServiceImpl implements UserService {
          * При редактировании запрос может быть отклонен,
          * если новый логин (username) не является старым и при этом он не уникален
          */
-    }
 }
 
