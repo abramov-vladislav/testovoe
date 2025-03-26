@@ -1,4 +1,5 @@
 package org.abramov.spring.testovoe.userservice.dto.response;
+
 import lombok.*;
 
 import java.util.UUID;

@@ -1,6 +1,6 @@
 package org.abramov.spring.testovoe.userservice.service.impl;
+
 import lombok.RequiredArgsConstructor;
-import org.abramov.spring.testovoe.userservice.mapper.exchange.UserExchangeMapper;
 import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
@@ -15,11 +15,10 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserExchangeMapper userExchangeMapper;
 
     @Override
     public List<UserDto> getAllUsers() {
-        return userExchangeMapper.findAll();
+        return userRepository.findAll();
     }
 
     @Override
@@ -36,12 +35,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public User updateUser(User user) {
 
-        return null;
-    }
-
-    /**
+        /**
          * При редактировании запрос может быть отклонен,
          * если новый логин (username) не является старым и при этом он не уникален
          */
+
+        return null;
+    }
+
+
 }
 

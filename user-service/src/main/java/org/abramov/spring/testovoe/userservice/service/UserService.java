@@ -1,7 +1,9 @@
 package org.abramov.spring.testovoe.userservice.service;
+
 import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.springframework.stereotype.Service;
+
 import java.util.List;
 import java.util.UUID;
 
