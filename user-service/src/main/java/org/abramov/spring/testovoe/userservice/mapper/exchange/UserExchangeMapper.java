@@ -1,4 +1,4 @@
-package org.abramov.spring.testovoe.userservice.controller.mapper;
+package org.abramov.spring.testovoe.userservice.mapper.exchange;
 
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.request.UpdateUserDto;
@@ -7,7 +7,7 @@ import org.abramov.spring.testovoe.userservice.entity.User;
 
 import java.util.UUID;
 
-public class UserMapper {
+public class UserExchangeMapper {
     public static User toUser(CreateUserDto createUserDto) {
         return new User(createUserDto.getUserId(), createUserDto.getUsername(), createUserDto.getUserLastName(),
                 createUserDto.getUserFirstName());

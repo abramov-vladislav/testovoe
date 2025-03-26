@@ -1,5 +1,7 @@
 package org.abramov.spring.testovoe.userservice.service.impl;
 import lombok.RequiredArgsConstructor;
+import org.abramov.spring.testovoe.userservice.mapper.exchange.UserExchangeMapper;
+import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
 import org.abramov.spring.testovoe.userservice.service.UserService;
@@ -13,10 +15,11 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final UserExchangeMapper userExchangeMapper;
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<UserDto> getAllUsers() {
+        return userExchangeMapper.findAll();
     }
 
     @Override

@@ -1,4 +1,5 @@
 package org.abramov.spring.testovoe.userservice.service;
+import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.springframework.stereotype.Service;
 import java.util.List;
@@ -8,7 +9,7 @@ import java.util.UUID;
 public interface UserService {
 
     //получить всех пользователей
-    List<User> getAllUsers();
+    List<UserDto> getAllUsers();
 
     //получить пользователя по идентификатору
     User getUserByUserId(UUID userId);
@@ -19,12 +20,4 @@ public interface UserService {
     //редактировать пользователя (осуществляется по его идентификатору): логин, фамилия, имя
     User updateUser(User user);
 
-
-
-    /**
-     *     private UUID userId;
-     *     private String username;
-     *     private String userLastName;
-     *     private String userFirstName;
-     */
 }
