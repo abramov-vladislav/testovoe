@@ -6,7 +6,6 @@ import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.service.UserService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,11 +21,9 @@ public class UserController {
     //получить всех пользователей
     @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers() {
-        return new ResponseEntity<>(
-                userService.getAllUsers(),
-                HttpStatus.OK);
-
-        //return userService.getAllUsers();
+        final var users = userService.getAllUsers();
+        final var userDtoList = users.stream().map(user -> UserMapper.toUserDto(user)).toList();
+        return ResponseEntity.ok(userDtoList);
     }
 
     //получить пользователя по идентификатору

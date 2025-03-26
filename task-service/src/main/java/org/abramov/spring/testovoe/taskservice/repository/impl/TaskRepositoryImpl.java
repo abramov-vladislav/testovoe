@@ -7,14 +7,13 @@ import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
+
 import java.sql.Types;
 import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
 public class TaskRepositoryImpl implements TaskRepository {
-    private final JdbcTemplate jdbcTemplate;
-
     private final static ResultSetExtractor<List<Task>> taskExtractor = (rs) -> {
         final var tasks = new ArrayList<Task>();
         while (rs.next()) {
@@ -32,7 +31,7 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
         return tasks;
     };
-
+    private final JdbcTemplate jdbcTemplate;
 
     @Override
     public List<Task> getAllTasks(Integer pageNumber, Integer pageSize) {
@@ -45,8 +44,8 @@ public class TaskRepositoryImpl implements TaskRepository {
                 LIMIT ? OFFSET ?
                 """;
 
-        final var args = new Object[]{ offset, limit };
-        final var types = new int[]{ Types.INTEGER, Types.INTEGER };
+        final var args = new Object[]{offset, limit};
+        final var types = new int[]{Types.INTEGER, Types.INTEGER};
 
         return Objects.requireNonNull(jdbcTemplate.query(sql, args, types, taskExtractor));
     }
@@ -58,7 +57,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                 FROM tasks
                 WHERE task_id = ?
                 """;
-        final var args = new Object[]{ taskId };
+        final var args = new Object[]{taskId};
         final var tasks = Objects.requireNonNull(jdbcTemplate.query(sql, args, taskExtractor));
 
         return tasks.isEmpty() ? Optional.empty() : Optional.of(tasks.getFirst());
@@ -68,9 +67,9 @@ public class TaskRepositoryImpl implements TaskRepository {
     public Task createTask(Task task) {
         return null;
         //
-         //
-         //
-         //
+        //
+        //
+        //
     }
 
     @Override

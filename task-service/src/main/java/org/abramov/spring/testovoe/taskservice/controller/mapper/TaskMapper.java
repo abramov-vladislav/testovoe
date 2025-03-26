@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 @Observed
 @Component
 public class TaskMapper {
-    public static Task toTask(TaskDto taskDto){
+    public static Task toTask(TaskDto taskDto) {
         Task task = new Task();
 
         task.setTaskId(taskDto.getTaskId());
@@ -22,7 +22,7 @@ public class TaskMapper {
         return task;
     }
 
-    public static TaskDto toTaskDto(Task task){
+    public static TaskDto toTaskDto(Task task) {
         TaskDto taskDto = new TaskDto();
 
         taskDto.setTaskId(task.getTaskId());

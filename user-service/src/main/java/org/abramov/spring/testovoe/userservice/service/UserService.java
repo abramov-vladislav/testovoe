@@ -1,6 +1,5 @@
 package org.abramov.spring.testovoe.userservice.service;
 
-import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +10,7 @@ import java.util.UUID;
 public interface UserService {
 
     //получить всех пользователей
-    List<UserDto> getAllUsers();
+    List<User> getAllUsers();
 
     //получить пользователя по идентификатору
     User getUserByUserId(UUID userId);
