@@ -37,28 +37,9 @@ public class UserServiceImpl implements UserService {
         User userExisting = userRepository.findById(user.getUserId())
                 .orElseThrow(() -> new RuntimeException("Пользователь не может быть найден"));
 
-
         userExisting.setUsername(user.getUsername());
         userExisting.setUserLastName(user.getUserLastName());
         userExisting.setUserFirstName(user.getUserFirstName());
-
-        if (!userExisting.getUsername().equals(user.getUsername()) &&
-                        userExisting.getUsername().equals(userRepository.findUserByUsername(userExisting.getUsername()))){
-            throw new RuntimeException("Данный логин уже используется другим пользователем");
-        }
-
-        /**
-         *     private UUID userId;
-         *     private String username;
-         *     private String userLastName;
-         *     private String userFirstName;
-         */
-
-        /**
-         * При редактировании запрос может быть отклонен,
-         * если новый логин (username) не является старым и при этом он не уникален
-         */
-
 
         return userRepository.save(userExisting);
     }
