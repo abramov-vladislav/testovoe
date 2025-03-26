@@ -15,6 +15,7 @@ import java.util.UUID;
 @Observed
 @Component
 public interface UserMapper {
+
     public static User toUser(CreateUserDto createUserDto) {
         return new User(createUserDto.getUserId(), createUserDto.getUsername(), createUserDto.getUserLastName(),
                 createUserDto.getUserFirstName());

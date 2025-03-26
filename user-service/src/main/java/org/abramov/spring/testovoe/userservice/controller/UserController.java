@@ -1,6 +1,7 @@
 package org.abramov.spring.testovoe.userservice.controller;
 
 import lombok.RequiredArgsConstructor;
+import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.request.UpdateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RequestMapping("/user")
 @RequiredArgsConstructor
 public class UserController {
+
     private final UserService userService;
 
     //получить всех пользователей
@@ -39,9 +41,16 @@ public class UserController {
     }
 
     //редактировать пользователя (осуществляется по его идентификатору): логин, фамилия, имя
-    @GetMapping("/{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable UUID userId, @RequestBody UpdateUserDto updateUserDto) {
         final var user = userService.updateUser(UserMapper.toUser(userId, updateUserDto));
+        return ResponseEntity.ok(UserMapper.toUserDto(user));
+    }
+
+    //создать пользователя
+    @PostMapping
+    public ResponseEntity<UserDto> createUser(@RequestBody CreateUserDto createUserDto) {
+        final var user = userService.createUser(UserMapper.toUser(createUserDto));
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 

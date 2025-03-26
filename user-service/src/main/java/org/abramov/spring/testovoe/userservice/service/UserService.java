@@ -21,4 +21,7 @@ public interface UserService {
     //редактировать пользователя (осуществляется по его идентификатору): логин, фамилия, имя
     User updateUser(User user);
 
+    //создать пользователя
+    User createUser(User user);
+
 }

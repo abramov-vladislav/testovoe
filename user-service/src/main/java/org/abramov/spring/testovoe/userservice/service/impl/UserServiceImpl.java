@@ -44,6 +44,16 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(userExisting);
     }
 
+    @Override
+    public User createUser(User user) {
+        if (user.getUserId() == null) {
+            user.setUserId(UUID.randomUUID());
+        }
+
+        userRepository.save(user);
+        return user;
+    }
+
 
 }
 
