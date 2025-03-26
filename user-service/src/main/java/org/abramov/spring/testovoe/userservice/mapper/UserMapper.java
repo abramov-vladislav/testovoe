@@ -1,19 +1,12 @@
 package org.abramov.spring.testovoe.userservice.mapper;
 
-import io.micrometer.observation.annotation.Observed;
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.request.UpdateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
-import org.apache.ibatis.annotations.Mapper;
-import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-
-@Mapper
-@Observed
-@Component
 public interface UserMapper {
 
     public static User toUser(CreateUserDto createUserDto) {
