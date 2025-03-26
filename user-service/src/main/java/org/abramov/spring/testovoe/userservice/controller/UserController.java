@@ -30,14 +30,16 @@ public class UserController {
 
     //получить пользователя по идентификатору
     @GetMapping("/{userId}")
-    public User getUserByUserId(@PathVariable UUID userId) {
-        return userService.getUserByUserId(userId);
+    public ResponseEntity<UserDto> getUserByUserId(@PathVariable UUID userId) {
+        final var user = userService.getUserByUserId(userId);
+        return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
     //получить пользователя по его логину (username)
     @GetMapping("/{username}")
-    public User getUserByUsername(String username) {
-        return userService.getUserByUsername(username);
+    public ResponseEntity<UserDto> getUserByUsername(@PathVariable String username) {
+        final var user = userService.getUserByUsername(username);
+        return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
     //редактировать пользователя (осуществляется по его идентификатору): логин, фамилия, имя
@@ -53,5 +55,9 @@ public class UserController {
         final var user = userService.createUser(UserMapper.toUser(createUserDto));
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
+
+    /**
+     * добавить delete
+     */
 
 }

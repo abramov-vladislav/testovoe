@@ -50,8 +50,12 @@ public class UserServiceImpl implements UserService {
             user.setUserId(UUID.randomUUID());
         }
 
-        userRepository.save(user);
-        return user;
+        userRepository.findUserByUsername(user.getUsername())
+                .ifPresent(existingUser -> {
+                    throw new RuntimeException("Пользователь с таким username уже существует");
+                });
+
+        return userRepository.save(user);
     }
 
 
