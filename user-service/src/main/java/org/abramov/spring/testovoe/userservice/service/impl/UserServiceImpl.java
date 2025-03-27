@@ -25,19 +25,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUserId(UUID userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователь не может быть найден"));
+                .orElseThrow(() -> new RuntimeException("Пользователя не существует"));
     }
 
     @Override
     public User getUserByUsername(String username) {
         return userRepository.findUsersByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Пользователь не может быть найден"));
+                .orElseThrow(() -> new RuntimeException("Пользователя не существует"));
     }
 
     @Override
     public User updateUser(User user) {
         User userExisting = userRepository.findById(user.getUserId())
-                .orElseThrow(() -> new RuntimeException("Пользователь не может быть найден"));
+                .orElseThrow(() -> new RuntimeException("Пользователя не существует"));
 
         userExisting.setUsername(user.getUsername());
         userExisting.setUserLastName(user.getUserLastName());
@@ -60,7 +60,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UUID userId) {
         userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователь не может быть найден"));
+                .orElseThrow(() -> new RuntimeException("Пользователя не существует"));
         userRepository.deleteById(userId);
     }
 }
