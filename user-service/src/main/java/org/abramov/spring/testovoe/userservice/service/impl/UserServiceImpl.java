@@ -59,6 +59,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void deleteUser(UUID userId) {
+        userRepository.findById(userId)
+                .orElseThrow(() -> new RuntimeException("Пользователь не может быть найден"));
         userRepository.deleteById(userId);
     }
 }
