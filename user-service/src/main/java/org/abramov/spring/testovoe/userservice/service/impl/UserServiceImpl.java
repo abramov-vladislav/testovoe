@@ -47,14 +47,19 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(CreateUserDto user) {
+    public User createUser(CreateUserDto createUserDto) {
 
-        userRepository.findUsersByUsername(user.getUsername())
+        userRepository.findUsersByUsername(createUserDto.getUsername())
                 .ifPresent(existingUser -> {
                     throw new RuntimeException("Пользователь с таким username уже существует");
                 });
 
-        return userRepository.save(UserMapper.toUser(user));
+        return userRepository.save(UserMapper.toUser(createUserDto));
+    }
+
+    @Override
+    public void deleteUser(UUID userId) {
+        userRepository.deleteById(userId);
     }
 }
 

@@ -55,8 +55,10 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
-    /**
-     * добавить delete
-     */
+    //удалить пользователя
+    @DeleteMapping("/{userId}")
+    public void deleteUser(@PathVariable UUID userId) {
+        userService.deleteUser(userId);
+    }
 
 }

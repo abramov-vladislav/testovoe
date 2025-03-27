@@ -23,6 +23,8 @@ public interface UserService {
     User updateUser(User user);
 
     //создать пользователя
-    User createUser(CreateUserDto user);
+    User createUser(CreateUserDto createUserDto);
 
+    //удалить пользователя
+    void deleteUser(UUID userId);
 }
