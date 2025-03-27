@@ -1,9 +1,7 @@
 package org.abramov.spring.testovoe.userservice.service.impl;
 
-import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
-import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
@@ -18,7 +16,6 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final EntityManager entityManager;
 
     @Override
     public List<User> getAllUsers() {
@@ -51,23 +48,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(CreateUserDto user) {
-//        if (user.getUserId() == null) {
-//            user.setUserId(UUID.randomUUID());
-//        }
 
         userRepository.findUsersByUsername(user.getUsername())
                 .ifPresent(existingUser -> {
                     throw new RuntimeException("Пользователь с таким username уже существует");
                 });
-//        User createdUser = new User();
-//                createdUser.setUsername(user.getUsername());
-//                createdUser.setUserFirstName(user.getUserFirstName());
-//                createdUser.setUserLastName(user.getUserLastName());
-        User createdUser = UserMapper.toUser(user);
 
-        return userRepository.save(createdUser);
+        return userRepository.save(UserMapper.toUser(user));
     }
-
-
 }
 

@@ -4,7 +4,6 @@ import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.request.UpdateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
-import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.service.UserService;
 import org.springframework.http.ResponseEntity;

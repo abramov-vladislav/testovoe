@@ -1,8 +1,9 @@
 package org.abramov.spring.testovoe.userservice.entity;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import lombok.experimental.Accessors;
 
 import java.io.Serializable;
