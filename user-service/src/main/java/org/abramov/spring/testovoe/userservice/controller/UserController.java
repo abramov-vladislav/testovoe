@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
 
     private final UserService userService;
 
     //получить всех пользователей
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<UserDto>> getAllUsers() {
         final var users = userService.getAllUsers();
         final var userDtoList = users.stream().map(user -> UserMapper.toUserDto(user)).toList();
@@ -52,7 +52,7 @@ public class UserController {
     //создать пользователя
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUserDto createUserDto) {
-        final var user = userService.createUser(UserMapper.toUser(createUserDto));
+        final var user = userService.createUser(createUserDto);
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 

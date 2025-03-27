@@ -1,5 +1,7 @@
 package org.abramov.spring.testovoe.userservice.service;
 
+import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
+import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,6 @@ public interface UserService {
     User updateUser(User user);
 
     //создать пользователя
-    User createUser(User user);
+    User createUser(CreateUserDto user);
 
 }

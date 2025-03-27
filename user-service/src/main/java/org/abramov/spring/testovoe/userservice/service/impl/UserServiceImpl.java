@@ -1,7 +1,11 @@
 package org.abramov.spring.testovoe.userservice.service.impl;
 
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
+import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
+import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
+import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
 import org.abramov.spring.testovoe.userservice.service.UserService;
 import org.springframework.stereotype.Service;
@@ -14,6 +18,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
+    private final EntityManager entityManager;
 
     @Override
     public List<User> getAllUsers() {
@@ -28,7 +33,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUsername(String username) {
-        return userRepository.findUserByUsername(username)
+        return userRepository.findUsersByUsername(username)
                 .orElseThrow(() -> new RuntimeException("Пользователь не может быть найден"));
     }
 
@@ -45,17 +50,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user) {
-        if (user.getUserId() == null) {
-            user.setUserId(UUID.randomUUID());
-        }
+    public User createUser(CreateUserDto user) {
+//        if (user.getUserId() == null) {
+//            user.setUserId(UUID.randomUUID());
+//        }
 
-        userRepository.findUserByUsername(user.getUsername())
+        userRepository.findUsersByUsername(user.getUsername())
                 .ifPresent(existingUser -> {
                     throw new RuntimeException("Пользователь с таким username уже существует");
                 });
+//        User createdUser = new User();
+//                createdUser.setUsername(user.getUsername());
+//                createdUser.setUserFirstName(user.getUserFirstName());
+//                createdUser.setUserLastName(user.getUserLastName());
+        User createdUser = UserMapper.toUser(user);
 
-        return userRepository.save(user);
+        return userRepository.save(createdUser);
     }
 
 
