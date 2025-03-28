@@ -1,8 +1,8 @@
 package org.abramov.spring.testovoe.taskservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
-import org.abramov.spring.testovoe.taskservice.controller.enums.TaskStatus;
 import org.abramov.spring.testovoe.taskservice.entity.Task;
+import org.abramov.spring.testovoe.taskservice.enums.TaskStatus;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.springframework.stereotype.Service;
@@ -18,13 +18,13 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
 
     @Override
-    public List<Task> getAllTasks(Integer pageNumber, Integer pageSize) {
-        return taskRepository.getAllTasks(pageNumber, pageSize);
+    public List<Task> getAllTasks() {
+        return taskRepository.findAll();
     }
 
     @Override
     public Task getTaskByTaskId(UUID taskId) {
-        return taskRepository.getTaskByTaskId(taskId)
+        return taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
     }
 
@@ -41,13 +41,13 @@ public class TaskServiceImpl implements TaskService {
         task.setTaskCreateDate(taskCreateDate);
         task.setTaskUpdateDate(taskUpdateDate);
 
-        return taskRepository.createTask(task);
+        return taskRepository.save(task);
     }
 
     @Override
     public Task updateTask(UUID taskId, String taskName, UUID taskOwnerId, UUID taskExecutorId,
                            TaskStatus taskStatus, LocalDateTime taskCreateDate, LocalDateTime taskUpdateDate) {
-        Task task = taskRepository.getTaskByTaskId(taskId)
+        Task task = taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
 
         task.setTaskName(taskName);
@@ -57,7 +57,7 @@ public class TaskServiceImpl implements TaskService {
         task.setTaskCreateDate(taskCreateDate);
         task.setTaskUpdateDate(taskUpdateDate);
 
-        return taskRepository.updateTask(task);
+        return taskRepository.save(task);
     }
 
 }

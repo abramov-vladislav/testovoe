@@ -1,7 +1,7 @@
-package org.abramov.spring.testovoe.taskservice.controller.mapper;
+package org.abramov.spring.testovoe.taskservice.mapper;
 
 import io.micrometer.observation.annotation.Observed;
-import org.abramov.spring.testovoe.taskservice.controller.dto.model.TaskDto;
+import org.abramov.spring.testovoe.taskservice.dto.model.TaskDto;
 import org.abramov.spring.testovoe.taskservice.entity.Task;
 import org.springframework.stereotype.Component;
 

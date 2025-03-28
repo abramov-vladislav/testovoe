@@ -1,17 +1,10 @@
 package org.abramov.spring.testovoe.taskservice.repository;
 
 import org.abramov.spring.testovoe.taskservice.entity.Task;
+import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
-public interface TaskRepository {
-    List<Task> getAllTasks(Integer pageNumber, Integer pageSize);
+public interface TaskRepository extends JpaRepository<Task, UUID> {
 
-    Optional<Task> getTaskByTaskId(UUID taskId);
-
-    Task createTask(Task task);
-
-    Task updateTask(Task task);
 }

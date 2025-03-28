@@ -1,7 +1,7 @@
-package org.abramov.spring.testovoe.taskservice.controller.dto.request;
+package org.abramov.spring.testovoe.taskservice.dto.response;
 
 import lombok.*;
-import org.abramov.spring.testovoe.taskservice.controller.enums.TaskStatus;
+import org.abramov.spring.testovoe.taskservice.enums.TaskStatus;
 
 import java.time.LocalDateTime;
 import java.util.UUID;
@@ -12,7 +12,7 @@ import java.util.UUID;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateTaskDto {
+public class TaskDto {
     private UUID taskId;
     private String taskName;
     private UUID taskOwnerId;

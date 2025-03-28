@@ -1,8 +1,8 @@
 package org.abramov.spring.testovoe.taskservice.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.abramov.spring.testovoe.taskservice.controller.dto.model.TaskDto;
-import org.abramov.spring.testovoe.taskservice.controller.mapper.TaskMapper;
+import org.abramov.spring.testovoe.taskservice.dto.model.TaskDto;
+import org.abramov.spring.testovoe.taskservice.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +18,7 @@ public class TaskController {
 
     @GetMapping("/")
     public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        final var tasks = taskService.getAllTasks(pageNumber, pageSize);
+        final var tasks = taskService.getAllTasks();
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
 
         return ResponseEntity.ok(taskDtoList);
