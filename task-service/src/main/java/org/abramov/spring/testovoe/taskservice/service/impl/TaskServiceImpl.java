@@ -3,12 +3,11 @@ package org.abramov.spring.testovoe.taskservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.taskservice.dto.request.CreateTaskDto;
 import org.abramov.spring.testovoe.taskservice.entity.Task;
-import org.abramov.spring.testovoe.taskservice.enums.TaskStatus;
+import org.abramov.spring.testovoe.taskservice.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -20,54 +19,39 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getAllTasks() {
+
         return taskRepository.findAll();
     }
 
     @Override
     public Task getTaskByTaskId(UUID taskId) {
+
         return taskRepository.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task not found"));
     }
 
-    /**
-     * public class TaskDto {
-     *
-     *     private UUID taskId;
-     *     private String taskName;
-     *     private UUID taskOwnerId;
-     *     private UUID taskExecutorId;
-     *     private TaskStatus taskStatus;
-     *     private LocalDateTime taskCreateDate;
-     *     private LocalDateTime taskUpdateDate;
-     * }
-     */
-
     @Override
     public Task createTask(CreateTaskDto createTaskDto) {
-        Task task = taskRepository.findByTaskName((createTaskDto.getTaskName())
-                .describeConstable().orElseThrow(() -> new RuntimeException("Задача не существует"));
-        task.setTaskName(createTaskDto.getTaskName());
-        task.getTaskOwnerId(createTaskDto.getTaskOwnerId());
 
+        taskRepository.findByTaskName((createTaskDto.getTaskName())
+                .describeConstable().orElseThrow(() -> new RuntimeException("Задачи не существует")));
 
-
-        taskRepository.save(task);
+        return taskRepository.save(TaskMapper.toTask(createTaskDto));
     }
 
     @Override
-    public Task updateTask(UUID taskId, String taskName, UUID taskOwnerId, UUID taskExecutorId,
-                           TaskStatus taskStatus, LocalDateTime taskCreateDate, LocalDateTime taskUpdateDate) {
-        Task task = taskRepository.findById(taskId)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+    public Task updateTask(Task task) {
+        Task taskExisting = taskRepository.findById(task.getTaskId())
+                .orElseThrow(() -> new RuntimeException("Задачи не существует"));
 
-        task.setTaskName(taskName);
-        task.setTaskOwnerId(taskOwnerId);
-        task.setTaskExecutorId(taskExecutorId);
-        task.setTaskStatus(taskStatus);
-        task.setTaskCreateDate(taskCreateDate);
-        task.setTaskUpdateDate(taskUpdateDate);
+        taskExisting.setTaskName(task.getTaskName());
+        taskExisting.setTaskOwnerId(task.getTaskOwnerId());
+        taskExisting.setTaskExecutorId(task.getTaskExecutorId());
+        taskExisting.setTaskStatus(task.getTaskStatus());
+        taskExisting.setTaskCreateDate(task.getTaskCreateDate());
+        taskExisting.setTaskUpdateDate(task.getTaskUpdateDate());
 
-        return taskRepository.save(task);
+        return taskRepository.save(taskExisting);
     }
 
 }

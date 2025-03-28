@@ -9,21 +9,22 @@ import java.util.UUID;
 
 public interface UserMapper {
 
-    public static User toUser(CreateUserDto createUserDto) {
+    static User toUser(CreateUserDto createUserDto) {
         return new User()
                 .setUsername(createUserDto.getUsername())
                 .setUserLastName(createUserDto.getUserLastName())
                 .setUserFirstName(createUserDto.getUserFirstName());
     }
 
-    public static User toUser(UUID userId, UpdateUserDto updateUserDto) {
+    static User toUser(UUID userId, UpdateUserDto updateUserDto) {
         return new User()
+                .setUserId(userId)
                 .setUsername(updateUserDto.getUsername())
                 .setUserLastName(updateUserDto.getUserLastName())
                 .setUserFirstName(updateUserDto.getUserFirstName());
     }
 
-    public static UserDto toUserDto(User user) {
+    static UserDto toUserDto(User user) {
         return new UserDto(user.getUserId(), user.getUsername(), user.getUserLastName(), user.getUserFirstName());
     }
 }

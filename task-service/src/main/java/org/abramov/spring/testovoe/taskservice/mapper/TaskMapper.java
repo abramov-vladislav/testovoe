@@ -1,38 +1,35 @@
 package org.abramov.spring.testovoe.taskservice.mapper;
 
-import io.micrometer.observation.annotation.Observed;
-import org.abramov.spring.testovoe.taskservice.dto.model.TaskDto;
+import org.abramov.spring.testovoe.taskservice.dto.request.CreateTaskDto;
+import org.abramov.spring.testovoe.taskservice.dto.request.UpdateTaskDto;
+import org.abramov.spring.testovoe.taskservice.dto.response.TaskDto;
 import org.abramov.spring.testovoe.taskservice.entity.Task;
-import org.springframework.stereotype.Component;
 
-@Observed
-@Component
-public class TaskMapper {
-    public static Task toTask(TaskDto taskDto) {
-        Task task = new Task();
+import java.util.UUID;
 
-        task.setTaskId(taskDto.getTaskId());
-        task.setTaskName(taskDto.getTaskName());
-        task.setTaskOwnerId(taskDto.getTaskOwnerId());
-        task.setTaskExecutorId(taskDto.getTaskExecutorId());
-        task.setTaskStatus(taskDto.getTaskStatus());
-        task.setTaskCreateDate(taskDto.getTaskCreateDate());
-        task.setTaskUpdateDate(taskDto.getTaskUpdateDate());
-
-        return task;
+public interface TaskMapper {
+    static Task toTask(CreateTaskDto createTaskDto) {
+        return new Task().setTaskName(createTaskDto.getTaskName())
+                .setTaskOwnerId(createTaskDto.getTaskOwnerId())
+                .setTaskExecutorId(createTaskDto.getTaskExecutorId())
+                .setTaskStatus(createTaskDto.getTaskStatus())
+                .setTaskCreateDate(createTaskDto.getTaskCreateDate())
+                .setTaskUpdateDate(createTaskDto.getTaskUpdateDate());
     }
 
-    public static TaskDto toTaskDto(Task task) {
-        TaskDto taskDto = new TaskDto();
+    static Task toTask(UUID taskId, UpdateTaskDto updateTaskDto) {
+        return new Task()
+                .setTaskId(taskId)
+                .setTaskName(updateTaskDto.getTaskName())
+                .setTaskOwnerId(updateTaskDto.getTaskOwnerId())
+                .setTaskExecutorId(updateTaskDto.getTaskExecutorId())
+                .setTaskStatus(updateTaskDto.getTaskStatus())
+                .setTaskCreateDate(updateTaskDto.getTaskCreateDate())
+                .setTaskUpdateDate(updateTaskDto.getTaskUpdateDate());
+    }
 
-        taskDto.setTaskId(task.getTaskId());
-        taskDto.setTaskName(task.getTaskName());
-        taskDto.setTaskOwnerId(task.getTaskOwnerId());
-        taskDto.setTaskExecutorId(task.getTaskExecutorId());
-        taskDto.setTaskStatus(task.getTaskStatus());
-        taskDto.setTaskCreateDate(task.getTaskCreateDate());
-        taskDto.setTaskUpdateDate(task.getTaskUpdateDate());
-
-        return taskDto;
+    static TaskDto toTaskDto(Task task) {
+        return new TaskDto(task.getTaskId(), task.getTaskName(), task.getTaskOwnerId(), task.getTaskExecutorId(),
+                task.getTaskStatus(), task.getTaskCreateDate(), task.getTaskUpdateDate());
     }
 }

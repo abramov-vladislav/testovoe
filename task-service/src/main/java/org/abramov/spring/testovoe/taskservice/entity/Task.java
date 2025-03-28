@@ -1,7 +1,6 @@
 package org.abramov.spring.testovoe.taskservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,21 +24,21 @@ public class Task implements Serializable {
     @Column(name = "task_id")
     private UUID taskId;
 
-    @Column(name = "task_name",nullable = false)
+    @Column(name = "task_name", nullable = false)
     private String taskName;
 
-    @Column(name = "owner_user_id",nullable = false)
+    @Column(name = "owner_user_id", nullable = false)
     private UUID taskOwnerId;
 
-    @Column(name = "executor_user_id",nullable = false)
+    @Column(name = "executor_user_id", nullable = false)
     private UUID taskExecutorId;
 
-    @Column(name = "task_status",nullable = false)
+    @Column(name = "task_status", nullable = false)
     private TaskStatus taskStatus;
 
-    @Column(name = "create_date",nullable = false)
+    @Column(name = "create_date", nullable = false)
     private LocalDateTime taskCreateDate;
 
-    @Column(name = "update_date",nullable = false)
+    @Column(name = "update_date", nullable = false)
     private LocalDateTime taskUpdateDate;
 }

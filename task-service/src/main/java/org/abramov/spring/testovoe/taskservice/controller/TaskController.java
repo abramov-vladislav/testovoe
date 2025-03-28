@@ -1,7 +1,9 @@
 package org.abramov.spring.testovoe.taskservice.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.abramov.spring.testovoe.taskservice.dto.model.TaskDto;
+import org.abramov.spring.testovoe.taskservice.dto.request.CreateTaskDto;
+import org.abramov.spring.testovoe.taskservice.dto.request.UpdateTaskDto;
+import org.abramov.spring.testovoe.taskservice.dto.response.TaskDto;
 import org.abramov.spring.testovoe.taskservice.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.springframework.http.ResponseEntity;
@@ -14,9 +16,10 @@ import java.util.UUID;
 @RequestMapping("/task")
 @RequiredArgsConstructor
 public class TaskController {
+
     private final TaskService taskService;
 
-    @GetMapping("/")
+    @GetMapping("/all")
     public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var tasks = taskService.getAllTasks();
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
@@ -25,40 +28,22 @@ public class TaskController {
     }
 
     @GetMapping("/{taskId}")
-    public ResponseEntity<TaskDto> getTaskById(@RequestParam UUID taskId) {
+    public ResponseEntity<TaskDto> getTaskById(@PathVariable UUID taskId) {
         final var task = taskService.getTaskByTaskId(taskId);
 
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
 
     @PostMapping
-    public ResponseEntity<TaskDto> createTask(@RequestBody TaskDto taskDto) {
-        UUID taskId = UUID.randomUUID();
-        final var task = taskService.createTask(
-                taskId,
-                taskDto.getTaskName(),
-                taskDto.getTaskOwnerId(),
-                taskDto.getTaskExecutorId(),
-                taskDto.getTaskStatus(),
-                taskDto.getTaskCreateDate(),
-                taskDto.getTaskUpdateDate()
-        );
+    public ResponseEntity<TaskDto> createTask(@RequestBody CreateTaskDto createTaskDto) {
+        final var task = taskService.createTask(createTaskDto);
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
 
-    @PostMapping("/{co")
-    public ResponseEntity<TaskDto> updateTask(@PathVariable UUID taskId, @RequestBody TaskDto taskDto) {
-        final var task = taskService.updateTask(
-                taskId,
-                taskDto.getTaskName(),
-                taskDto.getTaskOwnerId(),
-                taskDto.getTaskExecutorId(),
-                taskDto.getTaskStatus(),
-                taskDto.getTaskCreateDate(),
-                taskDto.getTaskUpdateDate()
-        );
+    @PostMapping("/{taskId}")
+    public ResponseEntity<TaskDto> updateTask(@PathVariable UUID taskId, @RequestBody UpdateTaskDto updateTaskDto) {
+        final var task = taskService.updateTask(TaskMapper.toTask(taskId, updateTaskDto));
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
-
 
 }
