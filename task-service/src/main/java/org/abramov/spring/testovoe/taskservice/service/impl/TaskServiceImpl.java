@@ -1,6 +1,7 @@
 package org.abramov.spring.testovoe.taskservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
+import org.abramov.spring.testovoe.taskservice.dto.request.CreateTaskDto;
 import org.abramov.spring.testovoe.taskservice.entity.Task;
 import org.abramov.spring.testovoe.taskservice.enums.TaskStatus;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
@@ -28,20 +29,29 @@ public class TaskServiceImpl implements TaskService {
                 .orElseThrow(() -> new RuntimeException("Task not found"));
     }
 
+    /**
+     * public class TaskDto {
+     *
+     *     private UUID taskId;
+     *     private String taskName;
+     *     private UUID taskOwnerId;
+     *     private UUID taskExecutorId;
+     *     private TaskStatus taskStatus;
+     *     private LocalDateTime taskCreateDate;
+     *     private LocalDateTime taskUpdateDate;
+     * }
+     */
+
     @Override
-    public Task createTask(UUID taskId, String taskName, UUID taskOwnerId, UUID taskExecutorId,
-                           TaskStatus taskStatus, LocalDateTime taskCreateDate, LocalDateTime taskUpdateDate) {
-        Task task = new Task();
+    public Task createTask(CreateTaskDto createTaskDto) {
+        Task task = taskRepository.findByTaskName((createTaskDto.getTaskName())
+                .describeConstable().orElseThrow(() -> new RuntimeException("Задача не существует"));
+        task.setTaskName(createTaskDto.getTaskName());
+        task.getTaskOwnerId(createTaskDto.getTaskOwnerId());
 
-        task.setTaskId(taskId);
-        task.setTaskName(taskName);
-        task.setTaskOwnerId(taskOwnerId);
-        task.setTaskExecutorId(taskExecutorId);
-        task.setTaskStatus(taskStatus);
-        task.setTaskCreateDate(taskCreateDate);
-        task.setTaskUpdateDate(taskUpdateDate);
 
-        return taskRepository.save(task);
+
+        taskRepository.save(task);
     }
 
     @Override

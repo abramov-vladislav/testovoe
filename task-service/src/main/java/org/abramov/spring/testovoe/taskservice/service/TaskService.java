@@ -1,5 +1,7 @@
 package org.abramov.spring.testovoe.taskservice.service;
 
+import org.abramov.spring.testovoe.taskservice.dto.request.CreateTaskDto;
+import org.abramov.spring.testovoe.taskservice.dto.request.UpdateTaskDto;
 import org.abramov.spring.testovoe.taskservice.entity.Task;
 import org.abramov.spring.testovoe.taskservice.enums.TaskStatus;
 
@@ -16,12 +18,10 @@ public interface TaskService {
     /**
      * Использовать createTaskDto
      */
-    Task createTask(UUID taskId, String taskName, UUID taskOwnerId, UUID taskExecutorId,
-                    TaskStatus taskStatus, LocalDateTime taskCreateDate, LocalDateTime taskUpdateDate);
+    Task createTask(CreateTaskDto createTaskDto);
 
     /**
      * Использовать updateTaskDto
      */
-    Task updateTask(UUID taskId, String taskName, UUID taskOwnerId, UUID taskExecutorId,
-                    TaskStatus taskStatus, LocalDateTime taskCreateDate, LocalDateTime taskUpdateDate);
+    Task updateTask(UpdateTaskDto updateTaskDto);
 }

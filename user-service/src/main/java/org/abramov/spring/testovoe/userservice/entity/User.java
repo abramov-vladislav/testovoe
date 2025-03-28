@@ -22,7 +22,7 @@ public class User implements Serializable {
     @Column(name = "user_id")
     private UUID userId;
 
-    @Column(nullable = false)
+    @Column(name = "username",nullable = false)
     private String username;
 
     @Column(name = "last_name", nullable = false)

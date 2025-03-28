@@ -10,8 +10,6 @@ import java.util.UUID;
 public interface UserMapper {
 
     public static User toUser(CreateUserDto createUserDto) {
-//        return new User(createUserDto.getUsername(), createUserDto.getUserLastName(),
-//                createUserDto.getUserFirstName());
         return new User()
                 .setUsername(createUserDto.getUsername())
                 .setUserLastName(createUserDto.getUserLastName())

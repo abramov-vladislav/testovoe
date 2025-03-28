@@ -1,10 +1,10 @@
 package org.abramov.spring.testovoe.userservice.dto.request;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
-@Setter
-@Getter
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateUserDto {
