@@ -3,6 +3,8 @@ package org.abramov.spring.testovoe.userservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
+import org.abramov.spring.testovoe.userservice.exception.UserAlreadyExistsException;
+import org.abramov.spring.testovoe.userservice.exception.UserNotFoundException;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
 import org.abramov.spring.testovoe.userservice.service.UserService;
@@ -18,26 +20,31 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> getAllUsers() {
-        return userRepository.findAll();
+    public List<User> getAllUsers() throws UserNotFoundException {
+        try {
+            return userRepository.findAll();
+        } catch (UserNotFoundException e) {
+            throw new UserNotFoundException("Пользователи не найдены");
+        }
     }
 
     @Override
-    public User getUserByUserId(UUID userId) {
+    public User getUserByUserId(UUID userId) throws UserNotFoundException {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователя не существует"));
+                .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
     }
 
     @Override
-    public User getUserByUsername(String username) {
+    public User getUserByUsername(String username) throws UserNotFoundException {
         return userRepository.findUsersByUsername(username)
-                .orElseThrow(() -> new RuntimeException("Пользователя не существует"));
+                .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
     }
 
     @Override
-    public User updateUser(User user) {
+    public User updateUser(User user) throws UserNotFoundException {
+
         User userExisting = userRepository.findById(user.getUserId())
-                .orElseThrow(() -> new RuntimeException("Пользователя не существует"));
+                .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
 
         userExisting.setUsername(user.getUsername());
         userExisting.setUserLastName(user.getUserLastName());
@@ -47,21 +54,24 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(CreateUserDto createUserDto) {
+    public User createUser(CreateUserDto createUserDto) throws UserAlreadyExistsException {
 
-        userRepository.findUsersByUsername(createUserDto.getUsername())
-                .ifPresent(existingUser -> {
-                    throw new RuntimeException("Пользователь с таким username уже существует");
-                });
+        boolean usernameExists = userRepository.existsUserByUsername(createUserDto.getUsername());
+        if (usernameExists) {
+            throw new UserAlreadyExistsException(createUserDto.getUsername());
+        }
 
         return userRepository.save(UserMapper.toUser(createUserDto));
     }
 
     @Override
-    public void deleteUser(UUID userId) {
-        userRepository.findById(userId)
-                .orElseThrow(() -> new RuntimeException("Пользователя не существует"));
-        userRepository.deleteById(userId);
+    public void deleteUser(UUID userId) throws UserNotFoundException {
+
+        try {
+            userRepository.deleteById(userId);
+        } catch (UserNotFoundException e) {
+            throw new UserNotFoundException("Пользователь не найден");
+        }
     }
 }
 
