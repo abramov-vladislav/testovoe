@@ -13,9 +13,15 @@ public interface TaskService {
 
     Task getTaskByTaskId(UUID taskId);
 
+    /**
+     * Использовать createTaskDto
+     */
     Task createTask(UUID taskId, String taskName, UUID taskOwnerId, UUID taskExecutorId,
                     TaskStatus taskStatus, LocalDateTime taskCreateDate, LocalDateTime taskUpdateDate);
 
+    /**
+     * Использовать updateTaskDto
+     */
     Task updateTask(UUID taskId, String taskName, UUID taskOwnerId, UUID taskExecutorId,
                     TaskStatus taskStatus, LocalDateTime taskCreateDate, LocalDateTime taskUpdateDate);
 }
