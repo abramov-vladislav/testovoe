@@ -9,7 +9,8 @@ import java.util.UUID;
 
 public interface TaskMapper {
     static Task toTask(CreateTaskDto createTaskDto) {
-        return new Task().setTaskName(createTaskDto.getTaskName())
+        return new Task()
+                .setTaskName(createTaskDto.getTaskName())
                 .setTaskOwnerId(createTaskDto.getTaskOwnerId())
                 .setTaskExecutorId(createTaskDto.getTaskExecutorId())
                 .setTaskStatus(createTaskDto.getTaskStatus())
