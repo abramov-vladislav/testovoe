@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/api/users")
 @RequiredArgsConstructor
 public class UserController {
 
@@ -26,19 +26,19 @@ public class UserController {
         return ResponseEntity.ok(userDtoList);
     }
 
-    @GetMapping("/{userId}")
+    @GetMapping("/id/{userId}")
     public ResponseEntity<UserDto> getUserByUserId(@PathVariable UUID userId) {
         final var user = userService.getUserByUserId(userId);
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
-    @GetMapping("/{username}")
+    @GetMapping("/username/{username}")
     public ResponseEntity<UserDto> getUserByUsername(@PathVariable String username) {
         final var user = userService.getUserByUsername(username);
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
-    @PutMapping("/{userId}")
+    @PutMapping("/id/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable UUID userId, @RequestBody UpdateUserDto updateUserDto) {
         final var user = userService.updateUser(UserMapper.toUser(userId, updateUserDto));
         return ResponseEntity.ok(UserMapper.toUserDto(user));
@@ -50,7 +50,7 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
-    @DeleteMapping("/{userId}")
+    @DeleteMapping("/id/{userId}")
     public void deleteUser(@PathVariable UUID userId) {
         userService.deleteUser(userId);
     }

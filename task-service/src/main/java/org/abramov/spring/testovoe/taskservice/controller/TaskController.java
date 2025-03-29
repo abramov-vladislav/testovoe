@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/task")
+@RequestMapping("/api/task")
 @RequiredArgsConstructor
 public class TaskController {
 
@@ -27,7 +27,7 @@ public class TaskController {
         return ResponseEntity.ok(taskDtoList);
     }
 
-    @GetMapping("/{taskId}")
+    @GetMapping("/id/{taskId}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable UUID taskId) {
         final var task = taskService.getTaskByTaskId(taskId);
 
@@ -40,7 +40,7 @@ public class TaskController {
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
 
-    @PostMapping("/{taskId}")
+    @PostMapping("/id/{taskId}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable UUID taskId, @RequestBody UpdateTaskDto updateTaskDto) {
         final var task = taskService.updateTask(TaskMapper.toTask(taskId, updateTaskDto));
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
