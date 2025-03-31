@@ -27,6 +27,7 @@
     <packaging>pom</packaging>
 
     <modules>
+        <module>user-service</module>
         <module>task-service</module>
         <module>user-service</module>
     </modules>

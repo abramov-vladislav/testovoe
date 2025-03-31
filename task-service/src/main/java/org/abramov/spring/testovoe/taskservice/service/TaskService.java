@@ -9,7 +9,7 @@ import java.util.UUID;
 
 @Service
 public interface TaskService {
-    List<Task> getAllTasks();
+    List<Task> getAllTasks(Integer pageNumber, Integer pageSize);
 
     Task getTaskByTaskId(UUID taskId);
 

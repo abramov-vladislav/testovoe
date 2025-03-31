@@ -21,12 +21,9 @@ public class TaskController {
 
     @GetMapping("/all")
     public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        final var tasks = taskService.getAllTasks();
+        final var tasks = taskService.getAllTasks(pageNumber, pageSize);
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
 
-        /**
-         * реализовать пагинацию
-         */
         return ResponseEntity.ok(taskDtoList);
     }
 
@@ -40,12 +37,14 @@ public class TaskController {
     @PostMapping
     public ResponseEntity<TaskDto> createTask(@RequestBody CreateTaskDto createTaskDto) {
         final var task = taskService.createTask(createTaskDto);
+
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
 
     @PostMapping("/id/{taskId}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable UUID taskId, @RequestBody UpdateTaskDto updateTaskDto) {
         final var task = taskService.updateTask(TaskMapper.toTask(taskId, updateTaskDto));
+
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
 

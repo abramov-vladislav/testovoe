@@ -8,6 +8,9 @@ import org.abramov.spring.testovoe.taskservice.exception.TaskNotFoundException;
 import org.abramov.spring.testovoe.taskservice.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,13 +23,15 @@ public class TaskServiceImpl implements TaskService {
     private final TaskRepository taskRepository;
 
     @Override
-    public List<Task> getAllTasks() throws TaskNotFoundException {
+    public List<Task> getAllTasks(Integer pageNumber, Integer pageSize) throws TaskNotFoundException {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<Task> page = taskRepository.findAll(pageable);
 
-        try {
-            return taskRepository.findAll();
-        } catch (TaskNotFoundException e) {
+        if (page.isEmpty()) {
             throw new TaskNotFoundException("Задания не найдены");
         }
+
+        return page.getContent();
     }
 
     @Override
@@ -38,8 +43,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task createTask(CreateTaskDto createTaskDto) throws TaskAlreadyExistsException {
-
         boolean taskExists = taskRepository.existsTaskByTaskName(createTaskDto.getTaskName());
+
         if (taskExists) {
             throw new TaskAlreadyExistsException(createTaskDto.getTaskName());
         }
@@ -49,7 +54,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task updateTask(Task task) throws TaskNotFoundException {
-
         Task taskExisting = taskRepository.findById(task.getTaskId())
                 .orElseThrow(() -> new TaskNotFoundException("Задачи не существует"));
 
