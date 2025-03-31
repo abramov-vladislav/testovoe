@@ -24,6 +24,9 @@ public class TaskController {
         final var tasks = taskService.getAllTasks();
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
 
+        /**
+         * реализовать пагинацию
+         */
         return ResponseEntity.ok(taskDtoList);
     }
 
