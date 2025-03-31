@@ -23,6 +23,9 @@ public class TaskController {
     public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var tasks = taskService.getAllTasks(pageNumber, pageSize);
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
+        /**
+         * настроить пагинацию
+         */
 
         return ResponseEntity.ok(taskDtoList);
     }
@@ -47,5 +50,12 @@ public class TaskController {
 
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
+
+    /**
+     * получить список моих задач (те у которых я владелец)
+     * получить список назначенных мне на исполнение задач
+     * изменить статус
+     * удалить задачу
+     */
 
 }
