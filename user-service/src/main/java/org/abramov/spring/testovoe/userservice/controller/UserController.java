@@ -47,6 +47,7 @@ public class UserController {
     @PostMapping
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUserDto createUserDto) {
         final var user = userService.createUser(createUserDto);
+
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
@@ -56,3 +57,4 @@ public class UserController {
     }
 
 }
+
