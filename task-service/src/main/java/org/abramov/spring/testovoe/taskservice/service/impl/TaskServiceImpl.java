@@ -8,6 +8,7 @@ import org.abramov.spring.testovoe.taskservice.exception.TaskNotFoundException;
 import org.abramov.spring.testovoe.taskservice.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
+import org.abramov.spring.testovoe.userservice.exception.UserNotFoundException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +37,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task getTaskByTaskId(UUID taskId) throws TaskNotFoundException {
-
         return taskRepository.findById(taskId)
                 .orElseThrow(() -> new TaskNotFoundException("Задача не найдена"));
     }
@@ -65,6 +65,16 @@ public class TaskServiceImpl implements TaskService {
         taskExisting.setTaskUpdateDate(task.getTaskUpdateDate());
 
         return taskRepository.save(taskExisting);
+    }
+
+    @Override
+    public void deleteTask(UUID taskId) {
+
+        try {
+            taskRepository.deleteTaskByTaskId(taskId);
+        } catch (TaskNotFoundException e) {
+            throw new TaskNotFoundException("Пользователь не найден");
+        }
     }
 
 }

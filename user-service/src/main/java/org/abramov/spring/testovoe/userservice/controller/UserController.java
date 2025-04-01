@@ -20,8 +20,8 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDto>> getAllUsers() {
-        final var users = userService.getAllUsers();
+    public ResponseEntity<List<UserDto>> getAllUsers(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        final var users = userService.getAllUsers(pageNumber, pageSize);
         final var userDtoList = users.stream().map(user -> UserMapper.toUserDto(user)).toList();
         return ResponseEntity.ok(userDtoList);
     }

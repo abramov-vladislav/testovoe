@@ -8,6 +8,9 @@ import org.abramov.spring.testovoe.userservice.exception.UserNotFoundException;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
 import org.abramov.spring.testovoe.userservice.service.UserService;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,12 +23,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> getAllUsers() throws UserNotFoundException {
-        try {
-            return userRepository.findAll();
-        } catch (UserNotFoundException e) {
+    public List<User> getAllUsers(Integer pageNumber, Integer pageSize) throws UserNotFoundException {
+        Pageable pageable = PageRequest.of(pageNumber, pageSize);
+        Page<User> page = userRepository.findAll(pageable);
+
+        if (page.isEmpty()) {
             throw new UserNotFoundException("Пользователи не найдены");
         }
+
+        return page.getContent();
     }
 
     @Override
@@ -42,10 +48,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User updateUser(User user) throws UserNotFoundException {
-
         User userExisting = userRepository.findById(user.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
-
         userExisting.setUsername(user.getUsername());
         userExisting.setUserLastName(user.getUserLastName());
         userExisting.setUserFirstName(user.getUserFirstName());
@@ -55,8 +59,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(CreateUserDto createUserDto) throws UserAlreadyExistsException {
-
         boolean usernameExists = userRepository.existsUserByUsername(createUserDto.getUsername());
+
         if (usernameExists) {
             throw new UserAlreadyExistsException(createUserDto.getUsername());
         }

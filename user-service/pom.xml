@@ -5,6 +5,10 @@
                              https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <properties>
+        <java.version>23</java.version>
+    </properties>
+
     <!-- Наследование от родительского POM -->
     <parent>
         <groupId>org.abramov.spring.testovoe</groupId>

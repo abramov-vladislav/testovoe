@@ -8,4 +8,6 @@ import java.util.UUID;
 public interface TaskRepository extends JpaRepository<Task, UUID> {
 
     boolean existsTaskByTaskName(String taskName);
+
+    void deleteTaskByTaskId(UUID taskId);
 }

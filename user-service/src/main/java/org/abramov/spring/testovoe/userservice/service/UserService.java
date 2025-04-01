@@ -10,7 +10,7 @@ import java.util.UUID;
 @Service
 public interface UserService {
 
-    List<User> getAllUsers();
+    List<User> getAllUsers(Integer pageNumber, Integer pageSize);
 
     User getUserByUserId(UUID userId);
 

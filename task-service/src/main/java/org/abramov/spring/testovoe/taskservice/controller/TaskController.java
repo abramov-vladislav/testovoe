@@ -23,9 +23,6 @@ public class TaskController {
     public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var tasks = taskService.getAllTasks(pageNumber, pageSize);
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
-        /**
-         * настроить пагинацию
-         */
 
         return ResponseEntity.ok(taskDtoList);
     }
@@ -49,6 +46,11 @@ public class TaskController {
         final var task = taskService.updateTask(TaskMapper.toTask(taskId, updateTaskDto));
 
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
+    }
+
+    @DeleteMapping
+    public void deleteTask(@PathVariable UUID taskId) {
+        taskService.deleteTask(taskId);
     }
 
     /**

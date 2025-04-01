@@ -16,4 +16,6 @@ public interface TaskService {
     Task createTask(CreateTaskDto createTaskDto);
 
     Task updateTask(Task task);
+
+    void deleteTask(UUID taskId);
 }
