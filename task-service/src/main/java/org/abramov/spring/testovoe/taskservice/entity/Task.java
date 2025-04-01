@@ -30,9 +30,14 @@ public class Task implements Serializable {
     @Column(name = "owner_user_id", nullable = false)
     private UUID taskOwnerId;
 
+    /**
+     * не просто айдишники, а прям сущности пользователей
+     */
+
     @Column(name = "executor_user_id", nullable = false)
     private UUID taskExecutorId;
 
+    @Enumerated(EnumType.STRING)
     @Column(name = "task_status", nullable = false)
     private TaskStatus taskStatus;
 
