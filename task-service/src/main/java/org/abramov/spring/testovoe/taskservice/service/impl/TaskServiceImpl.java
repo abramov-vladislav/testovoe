@@ -9,8 +9,6 @@ import org.abramov.spring.testovoe.taskservice.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,24 +18,23 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
+    //FIXME: Добавить обработку ошибок
+
     private final TaskRepository taskRepository;
 
     @Override
-    public List<Task> getAllTasks(Integer pageNumber, Integer pageSize) throws TaskNotFoundException {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<Task> page = taskRepository.findAll(pageable);
-
-        if (page.isEmpty()) {
-            throw new TaskNotFoundException("Задания не найдены");
-        }
-
-        return page.getContent();
+    public List<Task> getAllTasks(Integer pageNumber, Integer pageSize) {
+        return taskRepository.findAll(pageNumber, pageSize);
     }
 
     @Override
-    public Task getTaskByTaskId(UUID taskId) throws TaskNotFoundException {
-        return taskRepository.findById(taskId)
-                .orElseThrow(() -> new TaskNotFoundException("Задача не найдена"));
+    public List<Task> getAllTasksByUserIdAsOwnerOrExecutor(UUID userId, Integer pageNumber, Integer pageSize) {
+        return taskRepository.findAllByUserId(userId, pageNumber, pageSize);
+    }
+
+    @Override
+    public Task getTaskByTaskId(UUID taskId) {
+        return taskRepository.findById(taskId);
     }
 
     @Override
@@ -53,8 +50,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task updateTask(Task task) throws TaskNotFoundException {
-        Task taskExisting = taskRepository.findById(task.getTaskId())
-                .orElseThrow(() -> new TaskNotFoundException("Задачи не существует"));
+        Task taskExisting = taskRepository.findById(task.getTaskId());
 
         taskExisting.setTaskName(task.getTaskName());
         taskExisting.setTaskOwnerId(task.getTaskOwnerId());
@@ -68,12 +64,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public void deleteTask(UUID taskId) {
-
-        try {
-            taskRepository.deleteTaskByTaskId(taskId);
-        } catch (TaskNotFoundException e) {
-            throw new TaskNotFoundException("Пользователь не найден");
-        }
+        taskRepository.deleteTaskByTaskId(taskId);
     }
 
 }

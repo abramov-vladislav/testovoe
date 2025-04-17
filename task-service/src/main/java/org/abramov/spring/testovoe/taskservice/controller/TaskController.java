@@ -27,6 +27,20 @@ public class TaskController {
         return ResponseEntity.ok(taskDtoList);
     }
 
+    @GetMapping("/all/{userId}")
+    public ResponseEntity<List<TaskDto>> getAllTasksByUserIdAsOwnerOrExecutor(@PathVariable UUID userId, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        final var tasks = taskService.getAllTasksByUserIdAsOwnerOrExecutor(userId, pageNumber, pageSize);
+        final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
+
+        return ResponseEntity.ok(taskDtoList);
+    }
+    /**
+     * получить список моих задач (те у которых я владелец)
+     * получить список назначенных мне на исполнение задач
+     * изменить статус
+     * удалить задачу
+     */
+
     @GetMapping("/id/{taskId}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable UUID taskId) {
         final var task = taskService.getTaskByTaskId(taskId);
@@ -53,11 +67,6 @@ public class TaskController {
         taskService.deleteTask(taskId);
     }
 
-    /**
-     * получить список моих задач (те у которых я владелец)
-     * получить список назначенных мне на исполнение задач
-     * изменить статус
-     * удалить задачу
-     */
+
 
 }

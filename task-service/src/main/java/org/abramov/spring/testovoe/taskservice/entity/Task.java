@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 import org.abramov.spring.testovoe.taskservice.enums.TaskStatus;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -42,8 +43,9 @@ public class Task implements Serializable {
     private TaskStatus taskStatus;
 
     @Column(name = "create_date", nullable = false)
-    private LocalDateTime taskCreateDate;
+    private LocalDate taskCreateDate;
 
     @Column(name = "update_date", nullable = false)
-    private LocalDateTime taskUpdateDate;
+    private LocalDate taskUpdateDate;
 }
+
