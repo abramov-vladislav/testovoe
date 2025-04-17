@@ -38,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task createTask(CreateTaskDto createTaskDto) throws TaskAlreadyExistsException {
+    public Task createTask(CreateTaskDto createTaskDto) {
         boolean taskExists = taskRepository.existsTaskByTaskName(createTaskDto.getTaskName());
 
         if (taskExists) {
@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public Task updateTask(Task task) throws TaskNotFoundException {
+    public Task updateTask(Task task) {
         Task taskExisting = taskRepository.findById(task.getTaskId());
 
         taskExisting.setTaskName(task.getTaskName());
