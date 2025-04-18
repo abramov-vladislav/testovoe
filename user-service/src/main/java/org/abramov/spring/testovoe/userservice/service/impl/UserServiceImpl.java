@@ -8,9 +8,6 @@ import org.abramov.spring.testovoe.userservice.exception.UserNotFoundException;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
 import org.abramov.spring.testovoe.userservice.service.UserService;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,18 +20,8 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public List<User> getAllUsers(Integer pageNumber, Integer pageSize) throws UserNotFoundException {
-        Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<User> page = userRepository.getAllUsers(pageable);
-
-        if (page.isEmpty()) {
-            throw new UserNotFoundException("Пользователи не найдены");
-        }
-
-        /**
-         * ИСПРАВИТЬ ЧЕ ЗА PAGE ОТКУДА ОН ВООБЩЕ ВЗЯЛСЯ?
-         */
-        return page.getContent();
+    public List<User> getAllUsers(Integer pageNumber, Integer pageSize) {
+        return userRepository.getAllUsers(pageNumber, pageSize);
     }
 
     @Override

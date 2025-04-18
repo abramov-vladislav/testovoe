@@ -121,23 +121,19 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override
     public Task save(Task task) {
         final var sql = """
-            INSERT INTO task_service.tasks 
-            (task_id, task_name, owner_user_id, executor_user_id, task_status, create_date, update_date)
-            VALUES (?, ?, ?, ?)
-            """;
+                INSERT INTO task_service.tasks 
+                (task_id, task_name, owner_user_id, executor_user_id, task_status, create_date, update_date)
+                VALUES (?, ?, ?, ?)
+                """;
 
-        final var args = new Object[] { task.getTaskId(), task.getTaskName(),task.getTaskOwnerId(),
-                task.getTaskExecutorId(),task.getTaskStatus(), task.getTaskCreateDate(), task.getTaskUpdateDate()};
-        final var types = new int[] { Types.OTHER, Types.VARCHAR, Types.OTHER, Types.OTHER, Types.VARCHAR,
-                Types.TIMESTAMP, Types.TIMESTAMP };
+        final var args = new Object[]{task.getTaskId(), task.getTaskName(), task.getTaskOwnerId(),
+                task.getTaskExecutorId(), task.getTaskStatus(), task.getTaskCreateDate(), task.getTaskUpdateDate()};
+        final var types = new int[]{Types.OTHER, Types.VARCHAR, Types.OTHER, Types.OTHER, Types.VARCHAR,
+                Types.TIMESTAMP, Types.TIMESTAMP};
         jdbcTemplate.update(sql, args, types);
 
         return task;
     }
-
-
-
-
 
 
 }
