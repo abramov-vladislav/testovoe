@@ -19,7 +19,7 @@ public class TaskController {
 
     private final TaskService taskService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var tasks = taskService.getAllTasks(pageNumber, pageSize);
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
@@ -27,19 +27,21 @@ public class TaskController {
         return ResponseEntity.ok(taskDtoList);
     }
 
-    @GetMapping("/all/{userId}")
-    public ResponseEntity<List<TaskDto>> getAllTasksByUserIdAsOwnerOrExecutor(@PathVariable UUID userId, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
-        final var tasks = taskService.getAllTasksByUserIdAsOwnerOrExecutor(userId, pageNumber, pageSize);
+    @GetMapping("/owner/{userId}")
+    public ResponseEntity<List<TaskDto>> getAllTasksByUserIdAsOwner(@PathVariable UUID userId, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        final var tasks = taskService.getAllTasksByUserIdAsOwner(userId, pageNumber, pageSize);
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
 
         return ResponseEntity.ok(taskDtoList);
     }
-    /**
-     * получить список моих задач (те у которых я владелец)
-     * получить список назначенных мне на исполнение задач
-     * изменить статус
-     * удалить задачу
-     */
+
+    @GetMapping("/executor/{userId}")
+    public ResponseEntity<List<TaskDto>> getAllTasksByUserIdAsExecutor(@PathVariable UUID userId, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
+        final var tasks = taskService.getAllTasksByUserIdAsExecutor(userId, pageNumber, pageSize);
+        final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
+
+        return ResponseEntity.ok(taskDtoList);
+    }
 
     @GetMapping("/id/{taskId}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable UUID taskId) {
@@ -62,11 +64,9 @@ public class TaskController {
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{taskId}")
     public void deleteTask(@PathVariable UUID taskId) {
         taskService.deleteTask(taskId);
     }
-
-
 
 }

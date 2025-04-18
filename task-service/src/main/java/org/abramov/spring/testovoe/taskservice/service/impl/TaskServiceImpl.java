@@ -4,11 +4,9 @@ import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.taskservice.dto.request.CreateTaskDto;
 import org.abramov.spring.testovoe.taskservice.entity.Task;
 import org.abramov.spring.testovoe.taskservice.exception.TaskAlreadyExistsException;
-import org.abramov.spring.testovoe.taskservice.exception.TaskNotFoundException;
 import org.abramov.spring.testovoe.taskservice.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
-import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -28,13 +26,19 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
-    public List<Task> getAllTasksByUserIdAsOwnerOrExecutor(UUID userId, Integer pageNumber, Integer pageSize) {
-        return taskRepository.findAllByUserId(userId, pageNumber, pageSize);
+    public List<Task> getAllTasksByUserIdAsOwner(UUID userId, Integer pageNumber, Integer pageSize) {
+        return taskRepository.findAllByOwnerUserId(userId, pageNumber, pageSize);
+    }
+
+    @Override
+    public List<Task> getAllTasksByUserIdAsExecutor(UUID userId, Integer pageNumber, Integer pageSize) {
+        return taskRepository.findAllByExecutorUserId(userId, pageNumber, pageSize);
     }
 
     @Override
     public Task getTaskByTaskId(UUID taskId) {
-        return taskRepository.findById(taskId);
+        return taskRepository.getTaskByTaskId(taskId)
+                .orElseThrow(() -> new RuntimeException("Task not found"));
     }
 
     @Override
@@ -50,7 +54,8 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task updateTask(Task task) {
-        Task taskExisting = taskRepository.findById(task.getTaskId());
+        Task taskExisting = taskRepository.getTaskByTaskId(task.getTaskId())
+                .orElseThrow(() -> new RuntimeException("Task not found"));
 
         taskExisting.setTaskName(task.getTaskName());
         taskExisting.setTaskOwnerId(task.getTaskOwnerId());

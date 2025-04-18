@@ -9,7 +9,6 @@ import org.abramov.spring.testovoe.taskservice.enums.TaskStatus;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Setter
@@ -30,10 +29,7 @@ public class Task implements Serializable {
 
     @Column(name = "owner_user_id", nullable = false)
     private UUID taskOwnerId;
-
-    /**
-     * не просто айдишники, а прям сущности пользователей
-     */
+//FIXME: Не просто айдишники, а прям сущности
 
     @Column(name = "executor_user_id", nullable = false)
     private UUID taskExecutorId;

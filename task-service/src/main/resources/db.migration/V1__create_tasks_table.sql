@@ -9,7 +9,7 @@ CREATE TYPE task_service.status AS ENUM (
 
 CREATE TABLE IF NOT EXISTS task_service.tasks
 (
-    c          UUID PRIMARY KEY,
+    task_id                UUID PRIMARY KEY,
     task_name        VARCHAR(255) NOT NULL,
     owner_user_id    UUID         NOT NULL,
     executor_user_id UUID         NOT NULL,

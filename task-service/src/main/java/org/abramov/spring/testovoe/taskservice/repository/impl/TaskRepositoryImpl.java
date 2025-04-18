@@ -9,16 +9,11 @@ import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Types;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
 public class TaskRepositoryImpl implements TaskRepository {
-
-    private final JdbcTemplate jdbcTemplate;
 
     private final static ResultSetExtractor<List<Task>> taskExtractor = (rs) -> {
         final var tasks = new ArrayList<Task>();
@@ -30,47 +25,47 @@ public class TaskRepositoryImpl implements TaskRepository {
             task.setTaskExecutorId(rs.getObject("task_executor_id", UUID.class));
             task.setTaskStatus(TaskStatus.valueOf(rs.getString("task_status")));
             task.setTaskCreateDate(rs.getDate("task_create_date").toLocalDate());
-            ;
             task.setTaskUpdateDate(rs.getDate("task_update_date").toLocalDate());
             tasks.add(task);
         }
         return tasks;
     };
-
-
-    @Override
-    public List<Task> findAll(Integer pageNumber, Integer pageSize) {
-
-        return null;
-    }
+    private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Task> findAllByUserId(UUID userId, Integer pageNumber, Integer pageSize) {
+    public List<Task> findAllByOwnerUserId(UUID userId, Integer pageNumber, Integer pageSize) {
         int offset = (pageNumber - 1) * pageSize;
         int limit = pageSize;
 
         String sql = """
-                
+                SELECT *
+                FROM task_service.tasks
+                WHERE owner_user_id = ?
+                LIMIT ? OFFSET ?
                 """;
 
-        final var args = new Object[]{limit, offset};
+        final var args = new Object[]{userId, limit, offset};
         final var types = new int[]{Types.INTEGER, Types.INTEGER};
 
         return Objects.requireNonNull(jdbcTemplate.query(sql, args, types, taskExtractor));
     }
 
     @Override
-    public Task findById(UUID taskId) {
-        //FIXME: Найти по айди
+    public List<Task> findAllByExecutorUserId(UUID userId, Integer pageNumber, Integer pageSize) {
+        int offset = (pageNumber - 1) * pageSize;
+        int limit = pageSize;
 
-        return null;
-    }
+        String sql = """
+                SELECT *
+                FROM task_service.tasks
+                WHERE owner_user_id = ?
+                LIMIT ? OFFSET ?
+                """;
 
-    @Override
-    public Task save(Task task) {
-        //FIXME: Сохранить в бд
+        final var args = new Object[]{userId, limit, offset};
+        final var types = new int[]{Types.INTEGER, Types.INTEGER};
 
-        return null;
+        return Objects.requireNonNull(jdbcTemplate.query(sql, args, types, taskExtractor));
     }
 
     @Override
@@ -93,6 +88,56 @@ public class TaskRepositoryImpl implements TaskRepository {
 
         jdbcTemplate.update(sql, taskId);
     }
+
+    @Override
+    public List<Task> findAll(Integer pageNumber, Integer pageSize) {
+        int offset = (pageNumber - 1) * pageSize;
+        int limit = pageSize;
+
+        String sql = """
+                SELECT *
+                FROM task_service.tasks
+                LIMIT ? OFFSET ?
+                """;
+
+        final var args = new Object[]{limit, offset};
+        final var types = new int[]{Types.INTEGER, Types.INTEGER};
+
+        return Objects.requireNonNull(jdbcTemplate.query(sql, args, types, taskExtractor));
+    }
+
+    @Override
+    public Optional<Task> getTaskByTaskId(UUID taskId) {
+        final var sql = """
+                SELECT *
+                FROM task_service.tasks
+                WHERE task_id = ?
+                """;
+
+        final var tasks = Objects.requireNonNull(jdbcTemplate.query(sql, taskExtractor, taskId));
+        return tasks.isEmpty() ? Optional.empty() : Optional.of(tasks.getFirst());
+    }
+
+    @Override
+    public Task save(Task task) {
+        final var sql = """
+            INSERT INTO task_service.tasks 
+            (task_id, task_name, owner_user_id, executor_user_id, task_status, create_date, update_date)
+            VALUES (?, ?, ?, ?)
+            """;
+
+        final var args = new Object[] { task.getTaskId(), task.getTaskName(),task.getTaskOwnerId(),
+                task.getTaskExecutorId(),task.getTaskStatus(), task.getTaskCreateDate(), task.getTaskUpdateDate()};
+        final var types = new int[] { Types.OTHER, Types.VARCHAR, Types.OTHER, Types.OTHER, Types.VARCHAR,
+                Types.TIMESTAMP, Types.TIMESTAMP };
+        jdbcTemplate.update(sql, args, types);
+
+        return task;
+    }
+
+
+
+
 
 
 }
