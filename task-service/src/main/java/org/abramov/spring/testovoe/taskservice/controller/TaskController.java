@@ -43,7 +43,7 @@ public class TaskController {
         return ResponseEntity.ok(taskDtoList);
     }
 
-    @GetMapping("/id/{taskId}")
+    @GetMapping("/{taskId}")
     public ResponseEntity<TaskDto> getTaskById(@PathVariable UUID taskId) {
         final var task = taskService.getTaskByTaskId(taskId);
 
@@ -57,7 +57,7 @@ public class TaskController {
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
 
-    @PutMapping("/id/{taskId}")
+    @PutMapping("/{taskId}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable UUID taskId, @RequestBody UpdateTaskDto updateTaskDto) {
         final var task = taskService.updateTask(TaskMapper.toTask(taskId, updateTaskDto));
 

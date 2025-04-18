@@ -19,26 +19,26 @@ public class UserController {
 
     private final UserService userService;
 
-    @GetMapping("/all")
+    @GetMapping
     public ResponseEntity<List<UserDto>> getAllUsers(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var users = userService.getAllUsers(pageNumber, pageSize);
         final var userDtoList = users.stream().map(user -> UserMapper.toUserDto(user)).toList();
         return ResponseEntity.ok(userDtoList);
     }
 
-    @GetMapping("/id/{userId}")
+    @GetMapping("/{userId}")
     public ResponseEntity<UserDto> getUserByUserId(@PathVariable UUID userId) {
         final var user = userService.getUserByUserId(userId);
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
-    @GetMapping("/username/{username}")
+    @GetMapping("/{username}")
     public ResponseEntity<UserDto> getUserByUsername(@PathVariable String username) {
         final var user = userService.getUserByUsername(username);
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
-    @PutMapping("/id/{userId}")
+    @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable UUID userId, @RequestBody UpdateUserDto updateUserDto) {
         final var user = userService.updateUser(UserMapper.toUser(userId, updateUserDto));
         return ResponseEntity.ok(UserMapper.toUserDto(user));
@@ -51,7 +51,7 @@ public class UserController {
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
-    @DeleteMapping("/id/{userId}")
+    @DeleteMapping("/{userId}")
     public void deleteUser(@PathVariable UUID userId) {
         userService.deleteUser(userId);
     }

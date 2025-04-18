@@ -25,12 +25,15 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers(Integer pageNumber, Integer pageSize) throws UserNotFoundException {
         Pageable pageable = PageRequest.of(pageNumber, pageSize);
-        Page<User> page = userRepository.findAll(pageable);
+        Page<User> page = userRepository.getAllUsers(pageable);
 
         if (page.isEmpty()) {
             throw new UserNotFoundException("Пользователи не найдены");
         }
 
+        /**
+         * ИСПРАВИТЬ ЧЕ ЗА PAGE ОТКУДА ОН ВООБЩЕ ВЗЯЛСЯ?
+         */
         return page.getContent();
     }
 
