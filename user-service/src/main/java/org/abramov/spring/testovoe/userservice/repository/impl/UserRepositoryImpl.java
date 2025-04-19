@@ -79,15 +79,34 @@ public class UserRepositoryImpl implements UserRepository {
                FROM user_service.users
                WHERE user_id = ?
                """;
+
+        final var users = Objects.requireNonNull(jdbcTemplate.query(sql, userExtractor, userId));
+
+        return users.isEmpty() ? Optional.empty() : Optional.of(users.getFirst());
     }
 
     @Override
     public User createUser(User user) {
-        return null;
+        final var sql = """
+                INSERT INTO user_service.users
+                (user_id, username, user_last_name, user_first_name)
+                VALUES (?, ?, ?, ?)
+                """;
+
+        final var args = new Object[]{user.getUserId(), user.getUsername(), user.getUserLastName(), user.getUserFirstName()};
+        final var types = new int[]{Types.OTHER, Types.VARCHAR, Types.VARCHAR, Types.VARCHAR};
+
+        jdbcTemplate.update(sql, args, types);
+
+        return user;
     }
 
     @Override
     public void deleteById(UUID userId) {
-
+        final var sql = """
+                DELETE FROM user_service.users
+                WHERE user_id = ?
+                """;
+        jdbcTemplate.update(sql, userId);
     }
 }

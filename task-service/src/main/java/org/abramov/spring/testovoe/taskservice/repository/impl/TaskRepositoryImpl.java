@@ -81,16 +81,6 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public void deleteTaskByTaskId(UUID taskId) {
-        final var sql = """
-                DELETE FROM task_service.tasks 
-                WHERE task_id = ?
-                """;
-
-        jdbcTemplate.update(sql, taskId);
-    }
-
-    @Override
     public List<Task> getAllTasks(Integer pageNumber, Integer pageSize) {
         int offset = (pageNumber - 1) * pageSize;
         int limit = pageSize;
@@ -123,7 +113,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override
     public Task createTask(Task task) {
         final var sql = """
-                INSERT INTO task_service.tasks 
+                INSERT INTO task_service.tasks
                 (task_id, task_name, owner_user_id, executor_user_id, task_status, create_date, update_date)
                 VALUES (?, ?, ?, ?)
                 """;
@@ -132,9 +122,20 @@ public class TaskRepositoryImpl implements TaskRepository {
                 task.getTaskExecutorId(), task.getTaskStatus(), task.getTaskCreateDate(), task.getTaskUpdateDate()};
         final var types = new int[]{Types.OTHER, Types.VARCHAR, Types.OTHER, Types.OTHER, Types.VARCHAR,
                 Types.TIMESTAMP, Types.TIMESTAMP};
+
         jdbcTemplate.update(sql, args, types);
 
         return task;
+    }
+
+    @Override
+    public void deleteTaskByTaskId(UUID taskId) {
+        final var sql = """
+                DELETE FROM task_service.tasks
+                WHERE task_id = ?
+                """;
+
+        jdbcTemplate.update(sql, taskId);
     }
 
 
