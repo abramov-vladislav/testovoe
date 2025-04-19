@@ -9,15 +9,18 @@ import java.util.UUID;
 
 @Repository
 public interface UserRepository {
-    Optional<User> findUsersByUsername(String username);
+
+    List<User> getAllUsers(Integer pageNumber, Integer pageSize);
+
+    Optional<User> getUserByUsername(String username);
+
+    Optional<User> getUserByUserId(UUID userId);
 
     boolean existsUserByUsername(String username);
 
-    Optional<User> findById(UUID userId);
-
-    User save(User userExisting);
+    User createUser(User userExisting);
 
     void deleteById(UUID userId);
 
-    List<User> getAllUsers(Integer pageNumber, Integer pageSize);
+
 }

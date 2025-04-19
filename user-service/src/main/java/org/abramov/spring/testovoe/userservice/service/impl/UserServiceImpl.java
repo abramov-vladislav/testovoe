@@ -26,25 +26,25 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserByUserId(UUID userId) throws UserNotFoundException {
-        return userRepository.findById(userId)
+        return userRepository.getUserByUserId(userId)
                 .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
     }
 
     @Override
     public User getUserByUsername(String username) throws UserNotFoundException {
-        return userRepository.findUsersByUsername(username)
+        return userRepository.getUserByUsername(username)
                 .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
     }
 
     @Override
     public User updateUser(User user) throws UserNotFoundException {
-        User userExisting = userRepository.findById(user.getUserId())
+        User userExisting = userRepository.getUserByUserId(user.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
         userExisting.setUsername(user.getUsername());
         userExisting.setUserLastName(user.getUserLastName());
         userExisting.setUserFirstName(user.getUserFirstName());
 
-        return userRepository.save(userExisting);
+        return userRepository.createUser(userExisting);
     }
 
     @Override
@@ -55,7 +55,7 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException(createUserDto.getUsername());
         }
 
-        return userRepository.save(UserMapper.toUser(createUserDto));
+        return userRepository.createUser(UserMapper.toUser(createUserDto));
     }
 
     @Override

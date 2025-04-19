@@ -8,17 +8,17 @@ import java.util.UUID;
 
 public interface TaskRepository {
 
-    boolean existsTaskByTaskName(String taskName);
-
-    void deleteTaskByTaskId(UUID taskId);
-
-    List<Task> findAll(Integer pageNumber, Integer pageSize);
-
-    List<Task> findAllByOwnerUserId(UUID userId, Integer pageNumber, Integer pageSize);
-
-    List<Task> findAllByExecutorUserId(UUID userId, Integer pageNumber, Integer pageSize);
+    List<Task> getAllTasks(Integer pageNumber, Integer pageSize);
 
     Optional<Task> getTaskByTaskId(UUID taskId);
 
-    Task save(Task task);
+    List<Task> getAllTasksByOwnerUserId(UUID userId, Integer pageNumber, Integer pageSize);
+
+    List<Task> getAllTaskslByExecutorUserId(UUID userId, Integer pageNumber, Integer pageSize);
+
+    boolean existsTaskByTaskName(String taskName);
+
+    Task createTask(Task task);
+
+    void deleteTaskByTaskId(UUID taskId);
 }

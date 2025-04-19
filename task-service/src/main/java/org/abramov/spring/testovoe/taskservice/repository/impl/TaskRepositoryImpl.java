@@ -30,10 +30,11 @@ public class TaskRepositoryImpl implements TaskRepository {
         }
         return tasks;
     };
+
     private final JdbcTemplate jdbcTemplate;
 
     @Override
-    public List<Task> findAllByOwnerUserId(UUID userId, Integer pageNumber, Integer pageSize) {
+    public List<Task> getAllTasksByOwnerUserId(UUID userId, Integer pageNumber, Integer pageSize) {
         int offset = (pageNumber - 1) * pageSize;
         int limit = pageSize;
 
@@ -51,7 +52,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public List<Task> findAllByExecutorUserId(UUID userId, Integer pageNumber, Integer pageSize) {
+    public List<Task> getAllTaskslByExecutorUserId(UUID userId, Integer pageNumber, Integer pageSize) {
         int offset = (pageNumber - 1) * pageSize;
         int limit = pageSize;
 
@@ -90,7 +91,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public List<Task> findAll(Integer pageNumber, Integer pageSize) {
+    public List<Task> getAllTasks(Integer pageNumber, Integer pageSize) {
         int offset = (pageNumber - 1) * pageSize;
         int limit = pageSize;
 
@@ -115,11 +116,12 @@ public class TaskRepositoryImpl implements TaskRepository {
                 """;
 
         final var tasks = Objects.requireNonNull(jdbcTemplate.query(sql, taskExtractor, taskId));
+
         return tasks.isEmpty() ? Optional.empty() : Optional.of(tasks.getFirst());
     }
 
     @Override
-    public Task save(Task task) {
+    public Task createTask(Task task) {
         final var sql = """
                 INSERT INTO task_service.tasks 
                 (task_id, task_name, owner_user_id, executor_user_id, task_status, create_date, update_date)

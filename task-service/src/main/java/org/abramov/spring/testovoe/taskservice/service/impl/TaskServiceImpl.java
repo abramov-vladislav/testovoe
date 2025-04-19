@@ -22,17 +22,17 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getAllTasks(Integer pageNumber, Integer pageSize) {
-        return taskRepository.findAll(pageNumber, pageSize);
+        return taskRepository.getAllTasks(pageNumber, pageSize);
     }
 
     @Override
     public List<Task> getAllTasksByUserIdAsOwner(UUID userId, Integer pageNumber, Integer pageSize) {
-        return taskRepository.findAllByOwnerUserId(userId, pageNumber, pageSize);
+        return taskRepository.getAllTasksByOwnerUserId(userId, pageNumber, pageSize);
     }
 
     @Override
     public List<Task> getAllTasksByUserIdAsExecutor(UUID userId, Integer pageNumber, Integer pageSize) {
-        return taskRepository.findAllByExecutorUserId(userId, pageNumber, pageSize);
+        return taskRepository.getAllTaskslByExecutorUserId(userId, pageNumber, pageSize);
     }
 
     @Override
@@ -49,7 +49,7 @@ public class TaskServiceImpl implements TaskService {
             throw new TaskAlreadyExistsException(createTaskDto.getTaskName());
         }
 
-        return taskRepository.save(TaskMapper.toTask(createTaskDto));
+        return taskRepository.createTask(TaskMapper.toTask(createTaskDto));
     }
 
     @Override
@@ -64,7 +64,7 @@ public class TaskServiceImpl implements TaskService {
         taskExisting.setTaskCreateDate(task.getTaskCreateDate());
         taskExisting.setTaskUpdateDate(task.getTaskUpdateDate());
 
-        return taskRepository.save(taskExisting);
+        return taskRepository.createTask(taskExisting);
     }
 
     @Override

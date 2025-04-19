@@ -1,35 +1,88 @@
 package org.abramov.spring.testovoe.userservice.repository.impl;
 
+import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.sql.Types;
+import java.util.*;
 
+@Repository
+@RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
+
+    private final static ResultSetExtractor<List<User>> userExtractor = (rs) -> {
+        final var users = new ArrayList<User>();
+        while (rs.next()) {
+            final var user = new User();
+            user.setUserId(rs.getObject("user_id", UUID.class));
+            user.setUsername(rs.getString("username"));
+            user.setUserLastName(rs.getString("user_last_name"));
+            user.setUserFirstName(rs.getString("user_first_name"));
+
+            users.add(user);
+        }
+        return users;
+    };
+
+
+    private final JdbcTemplate jdbcTemplate;
+
     @Override
-    public Optional<User> findUsersByUsername(String username) {
-        return Optional.empty();
+    public Optional<User> getUserByUsername(String username) {
+       String sql = """
+               SELECT *
+               FROM user_service.users
+               WHERE username = ?
+               """;
+
+       final var users = Objects.requireNonNull(jdbcTemplate.query(sql, userExtractor, username));
+
+       return users.isEmpty() ? Optional.empty() : Optional.of(users.getFirst());
     }
 
     @Override
     public boolean existsUserByUsername(String username) {
-        return false;
+        String sql = """
+               SELECT *
+               FROM user_service.users
+               WHERE username = ?
+               """;
+
+        return jdbcTemplate.query(sql, userExtractor, username) != null;
     }
 
     @Override
     public List<User> getAllUsers(Integer pageNumber, Integer pageSize) {
-        return null;
+        int offset = (pageNumber - 1) * pageSize;
+        int limit = pageSize;
+
+        String sql = """
+               SELECT *
+               FROM user_service.users
+               LIMIT ? OFFSET ?
+               """;
+
+        final var args = new Object[]{limit, offset};
+        final var types = new int[]{Types.INTEGER, Types.INTEGER};
+
+        return Objects.requireNonNull(jdbcTemplate.query(sql, args, types, userExtractor));
     }
 
     @Override
-    public Optional<User> findById(UUID userId) {
-        return Optional.empty();
+    public Optional<User> getUserByUserId(UUID userId) {
+        String sql = """
+               SELECT *
+               FROM user_service.users
+               WHERE user_id = ?
+               """;
     }
 
     @Override
-    public User save(User userExisting) {
+    public User createUser(User user) {
         return null;
     }
 
