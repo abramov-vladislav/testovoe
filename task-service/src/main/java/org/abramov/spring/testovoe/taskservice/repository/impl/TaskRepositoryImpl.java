@@ -128,18 +128,6 @@ public class TaskRepositoryImpl implements TaskRepository {
         return task;
     }
 
-    /**
-     taskId;
-     taskName;
-     taskOwnerId;
-     taskExecutorId;
-     taskStatus;
-     taskCreateDate;
-     taskUpdateDate;
-     * }
-     */
-
-
     @Override
     public void deleteTaskByTaskId(UUID taskId) {
         final var sql = """
