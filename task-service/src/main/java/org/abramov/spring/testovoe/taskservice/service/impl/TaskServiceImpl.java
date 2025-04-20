@@ -38,7 +38,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task getTaskByTaskId(UUID taskId) {
         return taskRepository.getTaskByTaskId(taskId)
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new RuntimeException("Задание не найдено"));
     }
 
     @Override
@@ -55,7 +55,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public Task updateTask(Task task) {
         Task taskExisting = taskRepository.getTaskByTaskId(task.getTaskId())
-                .orElseThrow(() -> new RuntimeException("Task not found"));
+                .orElseThrow(() -> new RuntimeException("Задание не найдено"));
 
         taskExisting.setTaskName(task.getTaskName());
         taskExisting.setTaskOwnerId(task.getTaskOwnerId());

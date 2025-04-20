@@ -38,10 +38,10 @@ public class Task implements Serializable {
     @Column(name = "task_status", nullable = false)
     private TaskStatus taskStatus;
 
-    @Column(name = "create_date", nullable = false)
+    @Column(name = "task_create_date", nullable = false)
     private LocalDate taskCreateDate;
 
-    @Column(name = "update_date", nullable = false)
+    @Column(name = "task_update_date", nullable = false)
     private LocalDate taskUpdateDate;
 }
 

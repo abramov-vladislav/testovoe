@@ -114,7 +114,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     public Task createTask(Task task) {
         final var sql = """
                 INSERT INTO task_service.tasks
-                (task_id, task_name, owner_user_id, executor_user_id, task_status, create_date, update_date)
+                (task_id, task_name, owner_user_id, executor_user_id, task_status, task_create_date, task_update_date)
                 VALUES (?, ?, ?, ?)
                 """;
 
@@ -137,6 +137,5 @@ public class TaskRepositoryImpl implements TaskRepository {
 
         jdbcTemplate.update(sql, taskId);
     }
-
 
 }
