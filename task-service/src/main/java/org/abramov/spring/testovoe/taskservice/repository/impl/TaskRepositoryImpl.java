@@ -115,7 +115,7 @@ public class TaskRepositoryImpl implements TaskRepository {
         final var sql = """
                 INSERT INTO task_service.tasks
                 (task_id, task_name, owner_user_id, executor_user_id, task_status, task_create_date, task_update_date)
-                VALUES (?, ?, ?, ?)
+                VALUES (?, ?, ?, ?, ?, ?, ?)
                 """;
 
         final var args = new Object[]{task.getTaskId(), task.getTaskName(), task.getTaskOwnerId(),
@@ -127,6 +127,18 @@ public class TaskRepositoryImpl implements TaskRepository {
 
         return task;
     }
+
+    /**
+     taskId;
+     taskName;
+     taskOwnerId;
+     taskExecutorId;
+     taskStatus;
+     taskCreateDate;
+     taskUpdateDate;
+     * }
+     */
+
 
     @Override
     public void deleteTaskByTaskId(UUID taskId) {

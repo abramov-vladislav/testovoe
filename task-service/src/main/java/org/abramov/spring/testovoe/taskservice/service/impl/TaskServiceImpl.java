@@ -3,7 +3,6 @@ package org.abramov.spring.testovoe.taskservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.taskservice.dto.request.CreateTaskDto;
 import org.abramov.spring.testovoe.taskservice.entity.Task;
-import org.abramov.spring.testovoe.taskservice.exception.TaskAlreadyExistsException;
 import org.abramov.spring.testovoe.taskservice.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.repository.TaskRepository;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
@@ -43,12 +42,6 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public Task createTask(CreateTaskDto createTaskDto) {
-        boolean taskExists = taskRepository.existsTaskByTaskName(createTaskDto.getTaskName());
-
-        if (taskExists) {
-            throw new TaskAlreadyExistsException(createTaskDto.getTaskName());
-        }
-
         return taskRepository.createTask(TaskMapper.toTask(createTaskDto));
     }
 
