@@ -1,3 +1,5 @@
+--changeset Abramov_Vladislav:V1__create_users_table
+
 CREATE SCHEMA IF NOT EXISTS user_service;
 
 CREATE TABLE IF NOT EXISTS user_service.users

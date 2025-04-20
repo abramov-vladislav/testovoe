@@ -21,8 +21,8 @@ public class TaskRepositoryImpl implements TaskRepository {
             final var task = new Task();
             task.setTaskId(rs.getObject("task_id", UUID.class));
             task.setTaskName(rs.getString("task_name"));
-            task.setTaskOwnerId(rs.getObject("task_owner_id", UUID.class));
-            task.setTaskExecutorId(rs.getObject("task_executor_id", UUID.class));
+            task.setTaskOwnerId(rs.getObject("owner_user_id", UUID.class));
+            task.setTaskExecutorId(rs.getObject("executor_user_id", UUID.class));
             task.setTaskStatus(TaskStatus.valueOf(rs.getString("task_status")));
             task.setTaskCreateDate(rs.getDate("task_create_date").toLocalDate());
             task.setTaskUpdateDate(rs.getDate("task_update_date").toLocalDate());
@@ -46,7 +46,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                 """;
 
         final var args = new Object[]{userId, limit, offset};
-        final var types = new int[]{Types.INTEGER, Types.INTEGER};
+        final var types = new int[]{Types.OTHER, Types.INTEGER, Types.INTEGER};
 
         return Objects.requireNonNull(jdbcTemplate.query(sql, args, types, taskExtractor));
     }
@@ -59,12 +59,12 @@ public class TaskRepositoryImpl implements TaskRepository {
         String sql = """
                 SELECT *
                 FROM task_service.tasks
-                WHERE owner_user_id = ?
+                WHERE executor_user_id = ?
                 LIMIT ? OFFSET ?
                 """;
 
         final var args = new Object[]{userId, limit, offset};
-        final var types = new int[]{Types.INTEGER, Types.INTEGER};
+        final var types = new int[]{Types.OTHER, Types.INTEGER, Types.INTEGER};
 
         return Objects.requireNonNull(jdbcTemplate.query(sql, args, types, taskExtractor));
     }
@@ -77,7 +77,7 @@ public class TaskRepositoryImpl implements TaskRepository {
                 WHERE task_name = ?
                 """;
 
-        return jdbcTemplate.query(sql, taskExtractor, taskName) != null;
+        return !jdbcTemplate.query(sql, taskExtractor, taskName).isEmpty();
     }
 
     @Override

@@ -1,3 +1,5 @@
+--changeset Abramov_Vladislav:V1__create_tasks_table
+
 CREATE SCHEMA IF NOT EXISTS task_service;
 
 CREATE TYPE task_service.status AS ENUM (
