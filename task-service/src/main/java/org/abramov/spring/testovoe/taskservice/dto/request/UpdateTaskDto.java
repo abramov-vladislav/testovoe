@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.abramov.spring.testovoe.taskservice.enums.TaskStatus;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.UUID;
 
 @Data
@@ -17,6 +17,6 @@ public class UpdateTaskDto {
     private UUID taskOwnerId;
     private UUID taskExecutorId;
     private TaskStatus taskStatus;
-    private LocalDateTime taskCreateDate;
-    private LocalDateTime taskUpdateDate;
+    private LocalDate taskCreateDate;
+    private LocalDate taskUpdateDate;
 }

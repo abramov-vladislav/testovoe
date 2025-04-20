@@ -48,13 +48,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(CreateUserDto createUserDto) throws UserAlreadyExistsException {
-        boolean usernameExists = userRepository.existsUserByUsername(createUserDto.getUsername());
-
-        if (usernameExists) {
-            throw new UserAlreadyExistsException(createUserDto.getUsername());
-        }
-
+    public User createUser(CreateUserDto createUserDto) {
         return userRepository.createUser(UserMapper.toUser(createUserDto));
     }
 

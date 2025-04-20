@@ -1,5 +1,6 @@
 package org.abramov.spring.testovoe.userservice.repository.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
@@ -33,24 +34,24 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public Optional<User> getUserByUsername(String username) {
-       String sql = """
-               SELECT *
-               FROM user_service.users
-               WHERE username = ?
-               """;
+        String sql = """
+                SELECT *
+                FROM user_service.users
+                WHERE username = ?
+                """;
 
-       final var users = Objects.requireNonNull(jdbcTemplate.query(sql, userExtractor, username));
+        final var users = Objects.requireNonNull(jdbcTemplate.query(sql, userExtractor, username));
 
-       return users.isEmpty() ? Optional.empty() : Optional.of(users.getFirst());
+        return users.isEmpty() ? Optional.empty() : Optional.of(users.getFirst());
     }
 
     @Override
     public boolean existsUserByUsername(String username) {
         String sql = """
-               SELECT *
-               FROM user_service.users
-               WHERE username = ?
-               """;
+                SELECT *
+                FROM user_service.users
+                WHERE username = ?
+                """;
 
         return jdbcTemplate.query(sql, userExtractor, username) != null;
     }
@@ -61,10 +62,10 @@ public class UserRepositoryImpl implements UserRepository {
         int limit = pageSize;
 
         String sql = """
-               SELECT *
-               FROM user_service.users
-               LIMIT ? OFFSET ?
-               """;
+                SELECT *
+                FROM user_service.users
+                LIMIT ? OFFSET ?
+                """;
 
         final var args = new Object[]{limit, offset};
         final var types = new int[]{Types.INTEGER, Types.INTEGER};
@@ -75,10 +76,10 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> getUserByUserId(UUID userId) {
         String sql = """
-               SELECT *
-               FROM user_service.users
-               WHERE user_id = ?
-               """;
+                SELECT *
+                FROM user_service.users
+                WHERE user_id = ?
+                """;
 
         final var users = Objects.requireNonNull(jdbcTemplate.query(sql, userExtractor, userId));
 

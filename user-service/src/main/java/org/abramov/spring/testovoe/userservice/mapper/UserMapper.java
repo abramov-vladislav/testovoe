@@ -11,6 +11,7 @@ public interface UserMapper {
 
     static User toUser(CreateUserDto createUserDto) {
         return new User()
+                .setUserId(UUID.randomUUID())
                 .setUsername(createUserDto.getUsername())
                 .setUserLastName(createUserDto.getUserLastName())
                 .setUserFirstName(createUserDto.getUserFirstName());
