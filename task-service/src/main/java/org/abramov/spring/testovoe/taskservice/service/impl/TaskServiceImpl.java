@@ -1,5 +1,6 @@
 package org.abramov.spring.testovoe.taskservice.service.impl;
 
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.taskservice.dto.request.CreateTaskDto;
 import org.abramov.spring.testovoe.taskservice.entity.Task;
@@ -31,7 +32,7 @@ public class TaskServiceImpl implements TaskService {
 
     @Override
     public List<Task> getAllTasksByUserIdAsExecutor(UUID userId, Integer pageNumber, Integer pageSize) {
-        return taskRepository.getAllTaskslByExecutorUserId(userId, pageNumber, pageSize);
+        return taskRepository.getAllTasksByExecutorUserId(userId, pageNumber, pageSize);
     }
 
     @Override
@@ -41,6 +42,7 @@ public class TaskServiceImpl implements TaskService {
     }
 
     @Override
+    @Transactional
     public Task createTask(CreateTaskDto createTaskDto) {
         return taskRepository.createTask(TaskMapper.toTask(createTaskDto));
     }

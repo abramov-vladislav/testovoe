@@ -49,12 +49,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(CreateUserDto createUserDto) {
+        //FIXME добавить проверку может пользователь уже существует
         return userRepository.createUser(UserMapper.toUser(createUserDto));
     }
 
     @Override
     public void deleteUser(UUID userId) throws UserNotFoundException {
-
         try {
             userRepository.deleteById(userId);
         } catch (UserNotFoundException e) {

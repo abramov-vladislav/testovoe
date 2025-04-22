@@ -1,5 +1,6 @@
 package org.abramov.spring.testovoe.taskservice.dto.response;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,11 +15,18 @@ import java.util.UUID;
 public class TaskDto {
 
     private UUID taskId;
+
+    @NotNull
     private String taskName;
+
     private UUID taskOwnerId;
+
     private UUID taskExecutorId;
+
     private TaskStatus taskStatus;
+
     private LocalDate taskCreateDate;
+
     private LocalDate taskUpdateDate;
 }
 

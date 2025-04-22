@@ -52,7 +52,7 @@ public class TaskRepositoryImpl implements TaskRepository {
     }
 
     @Override
-    public List<Task> getAllTaskslByExecutorUserId(UUID userId, Integer pageNumber, Integer pageSize) {
+    public List<Task> getAllTasksByExecutorUserId(UUID userId, Integer pageNumber, Integer pageSize) {
         int offset = (pageNumber - 1) * pageSize;
         int limit = pageSize;
 
@@ -72,12 +72,14 @@ public class TaskRepositoryImpl implements TaskRepository {
     @Override
     public boolean existsTaskByTaskName(String taskName) {
         String sql = """
-                SELECT *
+                SELECT 1
                 FROM task_service.tasks
                 WHERE task_name = ?
+                LIMIT 1
                 """;
 
-        return !jdbcTemplate.query(sql, taskExtractor, taskName).isEmpty();
+        Boolean exists = jdbcTemplate.queryForObject(sql, Boolean.class, taskName);
+        return Boolean.TRUE.equals(exists);
     }
 
     @Override

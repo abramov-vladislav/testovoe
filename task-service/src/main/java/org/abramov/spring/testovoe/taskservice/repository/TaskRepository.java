@@ -14,7 +14,7 @@ public interface TaskRepository {
 
     List<Task> getAllTasksByOwnerUserId(UUID userId, Integer pageNumber, Integer pageSize);
 
-    List<Task> getAllTaskslByExecutorUserId(UUID userId, Integer pageNumber, Integer pageSize);
+    List<Task> getAllTasksByExecutorUserId(UUID userId, Integer pageNumber, Integer pageSize);
 
     boolean existsTaskByTaskName(String taskName);
 
