@@ -30,3 +30,5 @@ CREATE TABLE IF NOT EXISTS task_service.tasks
     task_update_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+
+
