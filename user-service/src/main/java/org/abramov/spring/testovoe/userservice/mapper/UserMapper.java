@@ -30,8 +30,11 @@ public interface UserMapper {
     }
 
     static UserDto toUserEventDto(User user) {
-        /**
-         * надо реализовать
-         */
+        return new UserDto(
+                user.getUserId(),
+                user.getUsername(),
+                user.getUserLastName(),
+                user.getUserFirstName()
+        );
     }
 }

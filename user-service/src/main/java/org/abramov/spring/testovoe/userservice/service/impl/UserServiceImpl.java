@@ -54,6 +54,11 @@ public class UserServiceImpl implements UserService {
         User userExisting = userRepository.getUserByUserId(user.getUserId())
                 .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
 
+        if (!userExisting.getUsername().equals(user.getUsername())
+                && userRepository.existsUserByUsername(user.getUsername())) {
+            throw new IllegalArgumentException("Username уже занят");
+        }
+
         userExisting.setUsername(user.getUsername());
         userExisting.setUserLastName(user.getUserLastName());
         userExisting.setUserFirstName(user.getUserFirstName());

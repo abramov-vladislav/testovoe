@@ -1,0 +1,16 @@
+sequenceDiagram
+    participant Client
+    participant Controller
+    participant Service
+    participant Repository
+    participant Kafka
+    
+    Client->>Controller: POST /api/users
+    Controller->>Service: createUser(dto)
+    Service->>Repository: existsByUsername()
+    Repository-->>Service: false
+    Service->>Repository: save(user)
+    Service->>Kafka: send user.created
+    Service-->>Controller: UserDto
+    Controller-->>Client: 201 Created
+
