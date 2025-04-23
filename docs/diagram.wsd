@@ -1,4 +1,5 @@
-sequenceDiagram
+@startuml sequenceDiagram
+
     participant Client
     participant Controller
     participant Service
@@ -13,4 +14,6 @@ sequenceDiagram
     Service->>Kafka: send user.created
     Service-->>Controller: UserDto
     Controller-->>Client: 201 Created
+
+@enduml
 
