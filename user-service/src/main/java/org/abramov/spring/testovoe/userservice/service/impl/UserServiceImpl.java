@@ -8,7 +8,7 @@ import org.abramov.spring.testovoe.userservice.exception.UserNotFoundException;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
 import org.abramov.spring.testovoe.userservice.service.UserService;
-import org.abramov.spring.testovoe.userservice.service.kafka.producer.UserKafkaProducer;
+import org.abramov.spring.testovoe.userservice.service.kafka.KafkaUserProducerService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -20,7 +20,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserKafkaProducer userKafkaProducer;
+    private final KafkaUserProducerService kafkaUserProducerService;
 
     @Override
     public List<User> getAllUsers(Integer pageNumber, Integer pageSize) {
@@ -72,7 +72,7 @@ public class UserServiceImpl implements UserService {
         User user = userRepository.createUser(UserMapper.toUser(createUserDto));
 
         // Отправка события в Kafka
-        userKafkaProducer.sendUserUpdate(UserMapper.toUserEventDto(user));
+        kafkaUserProducerService.send(createUserDto.getUsername());
 
         return user;
     }
