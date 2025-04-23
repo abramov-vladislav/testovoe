@@ -6,6 +6,7 @@ import org.abramov.spring.testovoe.taskservice.dto.request.UpdateTaskDto;
 import org.abramov.spring.testovoe.taskservice.dto.response.TaskDto;
 import org.abramov.spring.testovoe.taskservice.mapper.TaskMapper;
 import org.abramov.spring.testovoe.taskservice.service.TaskService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class TaskController {
     private final TaskService taskService;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<TaskDto>> getAllTasks(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var tasks = taskService.getAllTasks(pageNumber, pageSize);
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
@@ -28,6 +30,7 @@ public class TaskController {
     }
 
     @GetMapping("/owner/{userId}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<TaskDto>> getAllTasksByUserIdAsOwner(@PathVariable UUID userId, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var tasks = taskService.getAllTasksByUserIdAsOwner(userId, pageNumber, pageSize);
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
@@ -36,6 +39,7 @@ public class TaskController {
     }
 
     @GetMapping("/executor/{userId}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<TaskDto>> getAllTasksByUserIdAsExecutor(@PathVariable UUID userId, @RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var tasks = taskService.getAllTasksByUserIdAsExecutor(userId, pageNumber, pageSize);
         final var taskDtoList = tasks.stream().map(task -> TaskMapper.toTaskDto(task)).toList();
@@ -44,6 +48,7 @@ public class TaskController {
     }
 
     @GetMapping("/{taskId}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<TaskDto> getTaskById(@PathVariable UUID taskId) {
         final var task = taskService.getTaskByTaskId(taskId);
 
@@ -51,6 +56,7 @@ public class TaskController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<TaskDto> createTask(@RequestBody CreateTaskDto createTaskDto) {
         final var task = taskService.createTask(createTaskDto);
 
@@ -65,6 +71,7 @@ public class TaskController {
     }
 
     @DeleteMapping("/{taskId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteTask(@PathVariable UUID taskId) {
         taskService.deleteTask(taskId);
     }

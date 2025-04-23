@@ -6,6 +6,7 @@ import org.abramov.spring.testovoe.userservice.dto.request.UpdateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.service.UserService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +21,7 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<UserDto>> getAllUsers(@RequestParam Integer pageNumber, @RequestParam Integer pageSize) {
         final var users = userService.getAllUsers(pageNumber, pageSize);
         final var userDtoList = users.stream().map(user -> UserMapper.toUserDto(user)).toList();
@@ -27,12 +29,14 @@ public class UserController {
     }
 
     @GetMapping("/userid/{userId}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UserDto> getUserByUserId(@PathVariable UUID userId) {
         final var user = userService.getUserByUserId(userId);
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
 
     @GetMapping("/username/{username}")
+    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<UserDto> getUserByUsername(@PathVariable String username) {
         final var user = userService.getUserByUsername(username);
         return ResponseEntity.ok(UserMapper.toUserDto(user));
@@ -45,6 +49,7 @@ public class UserController {
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UserDto> createUser(@RequestBody CreateUserDto createUserDto) {
         final var user = userService.createUser(createUserDto);
 
@@ -52,6 +57,7 @@ public class UserController {
     }
 
     @DeleteMapping("/{userId}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteUser(@PathVariable UUID userId) {
         userService.deleteUser(userId);
     }
