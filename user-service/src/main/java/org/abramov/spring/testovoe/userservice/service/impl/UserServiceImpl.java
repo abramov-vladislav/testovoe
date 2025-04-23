@@ -3,7 +3,6 @@ package org.abramov.spring.testovoe.userservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
-import org.abramov.spring.testovoe.userservice.exception.UserAlreadyExistsException;
 import org.abramov.spring.testovoe.userservice.exception.UserNotFoundException;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;

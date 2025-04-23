@@ -1,6 +1,5 @@
 package org.abramov.spring.testovoe.userservice.repository.impl;
 
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
