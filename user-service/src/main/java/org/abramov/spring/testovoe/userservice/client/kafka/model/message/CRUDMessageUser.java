@@ -5,8 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.abramov.spring.testovoe.userservice.dto.UserCRUD;
 
-import java.util.UUID;
+import java.util.List;
 
 @Getter
 @Setter
@@ -15,16 +16,6 @@ import java.util.UUID;
 @Accessors(chain = true)
 public class CRUDMessageUser {
 
-    private UUID id;
-    private String username;
-    private String fullName;
-    private OperationType operation;
+    private List<UserCRUD> objects;
 
-    public boolean isValid() {
-        return id != null && username != null && !username.isBlank() && operation != null;
-    }
-
-    public enum OperationType {
-        INSERT, UPDATE, DELETE
-    }
 }
