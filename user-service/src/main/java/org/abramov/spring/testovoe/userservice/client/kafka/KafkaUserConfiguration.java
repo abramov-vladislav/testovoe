@@ -1,4 +1,4 @@
-package org.abramov.spring.testovoe.userservice.service.kafka;
+package org.abramov.spring.testovoe.userservice.client.kafka;
 
 //@Configuration
 //public class KafkaUserConfiguration {

@@ -1,4 +1,4 @@
-package org.abramov.spring.testovoe.taskservice.service.kafka;
+package org.abramov.spring.testovoe.taskservice.client.kafka;
 
 //@Service
 //public class KafkaTaskConsumerService {
