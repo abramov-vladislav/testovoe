@@ -15,10 +15,10 @@ import java.util.UUID;
 @Accessors(chain = true)
 public class CRUDMessageUser {
 
-    private UUID id;             // ID пользователя
-    private String username;     // Логин пользователя
-    private String fullName;     // ФИО пользователя (можно склеить фамилию и имя)
-    private OperationType operation; // Тип операции: INSERT, UPDATE, DELETE
+    private UUID id;
+    private String username;
+    private String fullName;
+    private OperationType operation;
 
     public boolean isValid() {
         return id != null && username != null && !username.isBlank() && operation != null;
