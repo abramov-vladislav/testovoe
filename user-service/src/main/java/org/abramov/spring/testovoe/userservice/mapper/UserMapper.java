@@ -1,14 +1,11 @@
 package org.abramov.spring.testovoe.userservice.mapper;
 
-import org.abramov.spring.testovoe.userservice.client.kafka.model.message.CRUDMessageUser;
 import org.abramov.spring.testovoe.userservice.dto.UserCRUD;
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.request.UpdateUserDto;
 import org.abramov.spring.testovoe.userservice.dto.response.UserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
-import org.abramov.spring.testovoe.userservice.enums.EventTypeUser;
 
-import java.util.List;
 import java.util.UUID;
 
 public interface UserMapper {
@@ -52,27 +49,27 @@ public interface UserMapper {
                 .setUserLastName(user.getUserLastName());
     }
 
-    /**
-     * Этот метод преобразует список пользователей (List<User>) в объект CRUDMessageUser,
-     * который, как правило, представляет собой сообщение, отправляемое в Kafka.
-     * Здесь ты, помимо конвертации в UserCRUD, также добавляешь информацию о типе события
-     * (например, создание, удаление или обновление пользователя), что делает его важным для того,
-     * чтобы Kafka-система знала, какого типа событие происходит.
-     *
-     * Назначение: Преобразует список сущностей User в сообщение Kafka (CRUDMessageUser),
-     * где указывается как сам список пользователей, так и тип события (EventTypeUser).
-     * Когда использовать: Используется, когда тебе нужно отправить несколько пользователей
-     * или событие, например, при массовом обновлении/удалении пользователей, или когда ты отправляешь
-     * событие с дополнительной информацией, такой как тип события.
-     */
-    static CRUDMessageUser toCRUDMessageUser(List<User> users, EventTypeUser type) {
-        List<UserCRUD> userCRUDList = users.stream()
-                .map(UserMapper::toUserCRUD)
-                .toList();
-
-        return new CRUDMessageUser()
-                .setUsers(userCRUDList)
-                .setEventType(type);
-    }
+//    /**
+//     * Этот метод преобразует список пользователей (List<User>) в объект CRUDMessageUser,
+//     * который, как правило, представляет собой сообщение, отправляемое в Kafka.
+//     * Здесь ты, помимо конвертации в UserCRUD, также добавляешь информацию о типе события
+//     * (например, создание, удаление или обновление пользователя), что делает его важным для того,
+//     * чтобы Kafka-система знала, какого типа событие происходит.
+//     *
+//     * Назначение: Преобразует список сущностей User в сообщение Kafka (CRUDMessageUser),
+//     * где указывается как сам список пользователей, так и тип события (EventTypeUser).
+//     * Когда использовать: Используется, когда тебе нужно отправить несколько пользователей
+//     * или событие, например, при массовом обновлении/удалении пользователей, или когда ты отправляешь
+//     * событие с дополнительной информацией, такой как тип события.
+//     */
+//    static CRUDMessageUser toCRUDMessageUser(List<User> users, EventTypeUser type) {
+//        List<UserCRUD> userCRUDList = users.stream()
+//                .map(UserMapper::toUserCRUD)
+//                .toList();
+//
+//        return new CRUDMessageUser()
+//                .setUsers(userCRUDList)
+//                .setEventType(type);
+//    }
 
 }
