@@ -25,12 +25,14 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<User> getAllUsers(Integer pageNumber, Integer pageSize) {
         log.info("Получение всех пользователей: страница={}, размер={}", pageNumber, pageSize);
+
         return userRepository.getAllUsers(pageNumber, pageSize);
     }
 
     @Override
     public User getUserByUserId(UUID userId) throws UserNotFoundException {
         log.debug("Запрос пользователя по userId: {}", userId);
+
         return userRepository.getUserByUserId(userId)
                 .orElseThrow(() -> {
                     log.warn("Пользователь с ID {} не найден", userId);
@@ -41,6 +43,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByUsername(String username) throws UserNotFoundException {
         log.debug("Запрос пользователя по username: {}", username);
+
         return userRepository.getUserByUsername(username)
                 .orElseThrow(() -> {
                     log.warn("Пользователь с username '{}' не найден", username);
@@ -80,6 +83,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void deleteUser(UUID userId) throws UserNotFoundException {
         log.warn("Удаление пользователя с ID: {}", userId);
+
         try {
             userRepository.deleteById(userId);
         } catch (UserNotFoundException e) {

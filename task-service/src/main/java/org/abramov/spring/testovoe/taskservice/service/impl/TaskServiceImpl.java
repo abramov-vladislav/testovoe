@@ -18,31 +18,33 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class TaskServiceImpl implements TaskService {
 
-    //FIXME: Добавить обработку ошибок
-
     private final TaskRepository taskRepository;
 
     @Override
     public List<Task> getAllTasks(Integer pageNumber, Integer pageSize) {
         log.debug("Получение всех задач: страница={}, размер={}", pageNumber, pageSize);
+
         return taskRepository.getAllTasks(pageNumber, pageSize);
     }
 
     @Override
     public List<Task> getAllTasksByUserIdAsOwner(UUID userId, Integer pageNumber, Integer pageSize) {
         log.debug("Получение задач по userId как владелец: {}", userId);
+
         return taskRepository.getAllTasksByOwnerUserId(userId, pageNumber, pageSize);
     }
 
     @Override
     public List<Task> getAllTasksByUserIdAsExecutor(UUID userId, Integer pageNumber, Integer pageSize) {
         log.debug("Получение задач по userId как исполнитель: {}", userId);
+
         return taskRepository.getAllTasksByExecutorUserId(userId, pageNumber, pageSize);
     }
 
     @Override
     public Task getTaskByTaskId(UUID taskId) {
         log.debug("Получение задачи по ID: {}", taskId);
+
         return taskRepository.getTaskByTaskId(taskId)
                 .orElseThrow(() -> {
                     log.warn("Задача с ID {} не найдена", taskId);
@@ -54,12 +56,14 @@ public class TaskServiceImpl implements TaskService {
     @Transactional
     public Task createTask(CreateTaskDto createTaskDto) {
         log.info("Создание задачи: {}", createTaskDto);
+
         return taskRepository.createTask(TaskMapper.toTask(createTaskDto));
     }
 
     @Override
     public Task updateTask(Task task) {
         log.info("Обновление задачи: {}", task);
+
         Task taskExisting = taskRepository.getTaskByTaskId(task.getTaskId())
                 .orElseThrow(() -> {
                     log.warn("Задача с ID {} не найдена для обновления", task.getTaskId());
@@ -79,6 +83,7 @@ public class TaskServiceImpl implements TaskService {
     @Override
     public void deleteTask(UUID taskId) {
         log.warn("Удаление задачи по ID: {}", taskId);
+
         taskRepository.deleteTaskByTaskId(taskId);
     }
 }

@@ -29,12 +29,4 @@ public interface UserMapper {
         return new UserDto(user.getUserId(), user.getUsername(), user.getUserLastName(), user.getUserFirstName());
     }
 
-    static UserDto toUserEventDto(User user) {
-        return new UserDto(
-                user.getUserId(),
-                user.getUsername(),
-                user.getUserLastName(),
-                user.getUserFirstName()
-        );
-    }
 }
