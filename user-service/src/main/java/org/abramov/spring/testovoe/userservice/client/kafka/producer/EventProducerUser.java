@@ -18,5 +18,10 @@ public class EventProducerUser {
         kafkaTemplate.send(topicName, userEvent);
     }
 
-
 }
+
+/**
+ * Отправляет общие бизнес-события о пользователях — например, лог активности, события аудита и т.д.
+ *
+ * Наверно, мне не нужен
+ */

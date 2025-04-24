@@ -2,14 +2,17 @@ package org.abramov.spring.testovoe.userservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.abramov.spring.testovoe.userservice.client.kafka.producer.CRUDProducerUser;
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
+import org.abramov.spring.testovoe.userservice.enums.EventTypeUser;
 import org.abramov.spring.testovoe.userservice.exception.UserNotFoundException;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
 import org.abramov.spring.testovoe.userservice.service.UserService;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 
@@ -19,7 +22,7 @@ import java.util.UUID;
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-//    private final KafkaUserProducerService kafkaUserProducerService;
+    private final CRUDProducerUser crudProducerUser;
 
     @Override
     public List<User> getAllUsers(Integer pageNumber, Integer pageSize) {
@@ -65,7 +68,12 @@ public class UserServiceImpl implements UserService {
         userExisting.setUserLastName(user.getUserLastName());
         userExisting.setUserFirstName(user.getUserFirstName());
 
-        return userRepository.createUser(userExisting);
+        userRepository.createUser(userExisting);
+
+        // Отправляем сообщение о событии обновления пользователя через Kafka
+        crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(userExisting)), EventTypeUser.USER_UPDATE);
+
+        return userExisting;
     }
 
     @Override
@@ -73,8 +81,8 @@ public class UserServiceImpl implements UserService {
         log.info("Создание нового пользователя: {}", createUserDto);
         User user = userRepository.createUser(UserMapper.toUser(createUserDto));
 
-        // Отправка события в Kafka
-//        kafkaUserProducerService.send(createUserDto.getUsername());
+        // Отправляем сообщение о событии создания пользователя через Kafka
+        crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(user)), EventTypeUser.USER_CREATE);
 
         return user;
     }
@@ -83,8 +91,15 @@ public class UserServiceImpl implements UserService {
     public void deleteUser(UUID userId) throws UserNotFoundException {
         log.warn("Удаление пользователя с ID: {}", userId);
 
+        User user = userRepository.getUserByUserId(userId)
+                .orElseThrow(() -> new UserNotFoundException("Пользователь не найден"));
+
         try {
             userRepository.deleteById(userId);
+
+            // Отправляем сообщение о событии удаления пользователя через Kafka
+            crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(user)), EventTypeUser.USER_DELETE);
+
         } catch (UserNotFoundException e) {
             log.error("Ошибка при удалении пользователя: {}", userId, e);
             throw new UserNotFoundException("Пользователь не найден");

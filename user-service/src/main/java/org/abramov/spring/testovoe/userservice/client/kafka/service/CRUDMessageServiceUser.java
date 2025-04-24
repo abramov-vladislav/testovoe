@@ -2,8 +2,7 @@ package org.abramov.spring.testovoe.userservice.client.kafka.service;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.abramov.spring.testovoe.userservice.client.kafka.producer.DeleteProducerUser;
-import org.abramov.spring.testovoe.userservice.client.kafka.producer.InsertProducerUser;
+import org.abramov.spring.testovoe.userservice.client.kafka.producer.CRUDProducerUser;
 import org.abramov.spring.testovoe.userservice.dto.UserCRUD;
 import org.abramov.spring.testovoe.userservice.service.UserService;
 import org.springframework.context.annotation.Lazy;
@@ -17,8 +16,7 @@ import java.util.UUID;
 public class CRUDMessageServiceUser {
 
     private final UserService userService;
-    private final DeleteProducerUser deleteProducerUser;
-    private final InsertProducerUser insertProducerUser;
+    private final CRUDProducerUser crudProducerUser;
 
     private UserCRUD createUserCRUD(UUID id, String username, String userFirstName, String userLastName) {
         return new UserCRUD()
