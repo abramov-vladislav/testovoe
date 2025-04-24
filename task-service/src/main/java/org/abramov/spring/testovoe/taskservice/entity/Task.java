@@ -1,7 +1,6 @@
 package org.abramov.spring.testovoe.taskservice.entity;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,7 +9,6 @@ import org.abramov.spring.testovoe.taskservice.enums.TaskStatus;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.UUID;
 
 @Setter
@@ -31,7 +29,6 @@ public class Task implements Serializable {
 
     @Column(name = "owner_user_id", nullable = false)
     private UUID taskOwnerId;
-//FIXME: Не просто айдишники, а прям сущности
 
     @Column(name = "executor_user_id", nullable = false)
     private UUID taskExecutorId;
@@ -47,37 +44,3 @@ public class Task implements Serializable {
     private LocalDate taskUpdateDate;
 }
 
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Accessors(chain = true)
-//public class SuppTask {
-//
-//    private UUID id;
-//    private String name;
-//    private SuppTaskStatus status;
-//    private List<UUID> controllerUserIds;
-//    private UUID lastModifyUserId;
-//    private UUID createUserId;
-//    private UUID organizationId;
-//    private UUID executeUserId;
-//    private UUID auditorUserId;
-//    private UUID assigneeGroupId;
-//    private UUID assigneeAuditorGroupId;
-//    private UUID spaceId;
-//
-//}
-
-//@Getter
-//@Setter
-//@NoArgsConstructor
-//@AllArgsConstructor
-//@Accessors(chain = true)
-//public class SuppTaskStatus {
-//
-//    private UUID id;
-//    private String name;
-//    private String title;
-//
-//}

@@ -139,5 +139,4 @@ public class TaskRepositoryImpl implements TaskRepository {
 
         jdbcTemplate.update(sql, taskId);
     }
-
 }
