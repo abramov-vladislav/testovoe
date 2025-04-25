@@ -2,6 +2,7 @@ package org.abramov.spring.testovoe.userservice.client.kafka.producer;
 
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.abramov.spring.testovoe.userservice.client.kafka.model.message.CRUDMessageUser;
 import org.abramov.spring.testovoe.userservice.dto.UserCRUD;
 import org.abramov.spring.testovoe.userservice.enums.EventTypeUser;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
+@Slf4j
 @Component
 @RequiredArgsConstructor
 public class CRUDProducerUser {
@@ -35,6 +37,7 @@ public class CRUDProducerUser {
             default -> throw new IllegalArgumentException("Unsupported type: " + eventType);
         };
         kafkaTemplate.send(topic, message);
+        log.info("Отправка Kafka-сообщения в топик '{}': событие={}, payload={}", topic, eventType, message);
     }
 }
 
