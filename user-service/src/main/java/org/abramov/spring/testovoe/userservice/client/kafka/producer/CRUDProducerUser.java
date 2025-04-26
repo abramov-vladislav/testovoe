@@ -32,12 +32,8 @@ public class CRUDProducerUser {
             case USER_CREATE -> insertTopic;
             case USER_DELETE -> deleteTopic;
             case USER_UPDATE -> updateTopic;
-            default -> throw new IllegalArgumentException("Unsupported type: " + eventType);
         };
         kafkaTemplate.send(topic, message);
     }
 }
 
-/**
- * Отправляет CRUD-события (Create, Read, Update, Delete) о пользователях.
- */

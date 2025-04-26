@@ -69,8 +69,6 @@ public class UserServiceImpl implements UserService {
         userExisting.setUserFirstName(user.getUserFirstName());
 
         userRepository.createUser(userExisting);
-
-        // Отправляем сообщение о событии обновления пользователя через Kafka
         crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(userExisting)), EventTypeUser.USER_UPDATE);
 
         return userExisting;
@@ -80,8 +78,6 @@ public class UserServiceImpl implements UserService {
     public User createUser(CreateUserDto createUserDto) {
         log.info("Создание нового пользователя: {}", createUserDto);
         User user = userRepository.createUser(UserMapper.toUser(createUserDto));
-
-        // Отправляем сообщение о событии создания пользователя через Kafka
         crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(user)), EventTypeUser.USER_CREATE);
 
         return user;
@@ -96,8 +92,6 @@ public class UserServiceImpl implements UserService {
 
         try {
             userRepository.deleteById(userId);
-
-            // Отправляем сообщение о событии удаления пользователя через Kafka
             crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(user)), EventTypeUser.USER_DELETE);
 
         } catch (UserNotFoundException e) {
