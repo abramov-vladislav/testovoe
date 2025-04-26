@@ -6,6 +6,7 @@ import org.abramov.spring.testovoe.userservice.client.kafka.producer.CRUDProduce
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.enums.EventTypeUser;
+import org.abramov.spring.testovoe.userservice.exception.UserAlreadyExistsException;
 import org.abramov.spring.testovoe.userservice.exception.UserNotFoundException;
 import org.abramov.spring.testovoe.userservice.mapper.UserMapper;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
@@ -69,6 +70,8 @@ public class UserServiceImpl implements UserService {
         userExisting.setUserFirstName(user.getUserFirstName());
 
         userRepository.createUser(userExisting);
+
+        // Отправляем сообщение о событии обновления пользователя через Kafka
         crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(userExisting)), EventTypeUser.USER_UPDATE);
 
         return userExisting;
@@ -77,7 +80,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(CreateUserDto createUserDto) {
         log.info("Создание нового пользователя: {}", createUserDto);
+
+        if (userRepository.existsUserByUsername(createUserDto.getUsername())) {
+            throw new UserAlreadyExistsException(createUserDto.getUsername());
+        }
+
         User user = userRepository.createUser(UserMapper.toUser(createUserDto));
+        // Отправляем сообщение о событии создания пользователя через Kafka
         crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(user)), EventTypeUser.USER_CREATE);
 
         return user;
@@ -92,8 +101,8 @@ public class UserServiceImpl implements UserService {
 
         try {
             userRepository.deleteById(userId);
+            // Отправляем сообщение о событии удаления пользователя через Kafka
             crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(user)), EventTypeUser.USER_DELETE);
-
         } catch (UserNotFoundException e) {
             log.error("Ошибка при удалении пользователя: {}", userId, e);
             throw new UserNotFoundException("Пользователь не найден");
