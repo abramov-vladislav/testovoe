@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
+import java.io.Serializable;
 import java.util.UUID;
 
 @Data
@@ -16,7 +17,8 @@ import java.util.UUID;
 @Entity
 @Table(name = "user_task", schema = "task_service")
 @Accessors(chain = true)
-public class UserTask {
+public class UserTask implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "user_id")

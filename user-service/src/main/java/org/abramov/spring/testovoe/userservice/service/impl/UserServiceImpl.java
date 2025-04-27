@@ -3,6 +3,7 @@ package org.abramov.spring.testovoe.userservice.service.impl;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.abramov.spring.testovoe.userservice.client.kafka.producer.CRUDProducerUser;
+import org.abramov.spring.testovoe.userservice.dto.UserCRUD;
 import org.abramov.spring.testovoe.userservice.dto.request.CreateUserDto;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.enums.EventTypeUser;
@@ -71,8 +72,8 @@ public class UserServiceImpl implements UserService {
 
         userRepository.createUser(userExisting);
 
-        // Отправляем сообщение о событии обновления пользователя через Kafka
-        crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(userExisting)), EventTypeUser.USER_UPDATE);
+        UserCRUD userCRUD = UserMapper.toUserCRUD(userExisting).setEventType(EventTypeUser.USER_UPDATE);
+        crudProducerUser.send(Collections.singletonList(userCRUD), EventTypeUser.USER_UPDATE);
 
         return userExisting;
     }
@@ -99,8 +100,9 @@ public class UserServiceImpl implements UserService {
 
         try {
             userRepository.deleteById(userId);
-            // Отправляем сообщение о событии удаления пользователя через Kafka
-            crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(user)), EventTypeUser.USER_DELETE);
+
+            UserCRUD userCRUD = UserMapper.toUserCRUD(user).setEventType(EventTypeUser.USER_DELETE);
+            crudProducerUser.send(Collections.singletonList(userCRUD), EventTypeUser.USER_DELETE);
         } catch (UserNotFoundException e) {
             log.error("Ошибка при удалении пользователя: {}", userId, e);
             throw new UserNotFoundException("Пользователь не найден");
