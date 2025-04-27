@@ -47,12 +47,12 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public boolean existsUserByUsername(String username) {
         String sql = """
-            SELECT EXISTS(
-                SELECT 1
-                FROM user_service.users
-                WHERE username = ?
-            )
-            """;
+                SELECT EXISTS(
+                    SELECT 1
+                    FROM user_service.users
+                    WHERE username = ?
+                )
+                """;
 
         Boolean exists = jdbcTemplate.queryForObject(sql, Boolean.class, username);
         return Boolean.TRUE.equals(exists);
