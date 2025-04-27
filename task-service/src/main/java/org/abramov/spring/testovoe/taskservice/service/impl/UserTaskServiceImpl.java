@@ -1,22 +1,22 @@
-package org.abramov.spring.testovoe.taskservice.client.kafka.service;
+package org.abramov.spring.testovoe.taskservice.service.impl;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.abramov.spring.testovoe.taskservice.entity.UserTask;
 import org.abramov.spring.testovoe.taskservice.repository.UserTaskRepository;
+import org.abramov.spring.testovoe.taskservice.service.UserTaskService;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class UserTaskService {
+public class UserTaskServiceImpl implements UserTaskService {
 
     private final UserTaskRepository userTaskRepository;
 
-    @Transactional
+    @Override
     public void saveOrUpdateUser(UserTask userTask) {
         if (userTask != null && userTask.getUserId() != null) {
             UserTask entity = UserTask.builder()
@@ -33,28 +33,13 @@ public class UserTaskService {
         }
     }
 
-    @Transactional(readOnly = true)
-    public UserTask getUserById(UUID userId) {
-        return userTaskRepository.findById(userId)
-                .map(entity -> UserTask.builder()
-                        .userId(entity.getUserId())
-                        .username(entity.getUsername())
-                        .userFirstName(entity.getUserFirstName())
-                        .userLastName(entity.getUserLastName())
-                        .build())
-                .orElseGet(() -> {
-                    log.warn("Пользователь с id {} не найден в БД", userId);
-                    return null;
-                });
-    }
-
-    @Transactional
+    @Override
     public void removeUser(UUID userId) {
         userTaskRepository.deleteById(userId);
         log.info("Пользователь с id {} удалён из БД", userId);
     }
 
-    @Transactional(readOnly = true)
+    @Override
     public boolean exists(UUID userId) {
         return userTaskRepository.existsById(userId);
     }

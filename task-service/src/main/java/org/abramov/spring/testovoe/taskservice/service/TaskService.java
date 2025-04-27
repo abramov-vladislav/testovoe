@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.UUID;
 
 public interface TaskService {
+
     List<Task> getAllTasks(Integer pageNumber, Integer pageSize);
 
     List<Task> getAllTasksByUserIdAsOwner(UUID userId, Integer pageNumber, Integer pageSize);

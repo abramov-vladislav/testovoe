@@ -19,9 +19,6 @@ public class CRUDProducerUser {
 
     private final KafkaTemplate<String, CRUDMessageUser> kafkaTemplate;
 
-    @Value("${spring.kafka.topic.user-insert.name}")
-    private String insertTopic;
-
     @Value("${spring.kafka.topic.user-delete.name}")
     private String deleteTopic;
 
@@ -31,7 +28,6 @@ public class CRUDProducerUser {
     public void send(List<UserCRUD> objects, EventTypeUser eventType) {
         var message = new CRUDMessageUser(objects, eventType);
         String topic = switch (eventType) {
-            case USER_CREATE -> insertTopic;
             case USER_DELETE -> deleteTopic;
             case USER_UPDATE -> updateTopic;
         };

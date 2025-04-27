@@ -6,7 +6,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
-import org.abramov.spring.testovoe.taskservice.enums.EventTypeUser;
 
 import java.util.UUID;
 

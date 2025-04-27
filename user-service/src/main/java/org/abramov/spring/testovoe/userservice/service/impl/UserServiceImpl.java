@@ -86,8 +86,6 @@ public class UserServiceImpl implements UserService {
         }
 
         User user = userRepository.createUser(UserMapper.toUser(createUserDto));
-        // Отправляем сообщение о событии создания пользователя через Kafka
-        crudProducerUser.send(Collections.singletonList(UserMapper.toUserCRUD(user)), EventTypeUser.USER_CREATE);
 
         return user;
     }
