@@ -44,9 +44,15 @@ public class UserController {
 
     @PutMapping("/{userId}")
     public ResponseEntity<UserDto> updateUser(@PathVariable UUID userId, @RequestBody UpdateUserDto updateUserDto) {
+
+        if (userService.existsByUsername(updateUserDto.getUsername())) {
+            throw new IllegalArgumentException("Username должен быть уникальным!");
+        }
+
         final var user = userService.updateUser(UserMapper.toUser(userId, updateUserDto));
         return ResponseEntity.ok(UserMapper.toUserDto(user));
     }
+
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)

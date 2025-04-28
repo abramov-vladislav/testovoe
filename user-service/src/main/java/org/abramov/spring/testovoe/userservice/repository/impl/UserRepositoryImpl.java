@@ -112,4 +112,14 @@ public class UserRepositoryImpl implements UserRepository {
                 """;
         jdbcTemplate.update(sql, userId);
     }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        final var sql = """
+                SELECT COUNT(*) FROM user_service.users
+                WHERE username = ?
+                """;
+        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, username);
+        return count != null && count > 0;
+    }
 }

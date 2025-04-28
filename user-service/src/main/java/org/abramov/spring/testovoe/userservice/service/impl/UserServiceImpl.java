@@ -108,5 +108,20 @@ public class UserServiceImpl implements UserService {
             throw new UserNotFoundException("Пользователь не найден");
         }
     }
+
+    @Override
+    public boolean existsByUsername(String username) {
+        log.debug("Проверка существования пользователя с username: {}", username);
+
+        boolean exists = userRepository.existsUserByUsername(username);
+
+        if (exists) {
+            log.info("Пользователь с username '{}' существует.", username);
+        } else {
+            log.info("Пользователь с username '{}' не найден.", username);
+        }
+
+        return exists;
+    }
 }
 

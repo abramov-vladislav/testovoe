@@ -22,4 +22,6 @@ public interface UserRepository {
 
     void deleteById(UUID userId);
 
+    boolean existsByUsername(String username);
+
 }

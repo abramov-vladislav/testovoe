@@ -19,4 +19,6 @@ public interface UserService {
     User createUser(CreateUserDto createUserDto);
 
     void deleteUser(UUID userId);
+
+    boolean existsByUsername(String username);
 }
