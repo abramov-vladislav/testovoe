@@ -27,6 +27,10 @@ public class UserTaskServiceImpl implements UserTaskService {
                     .build();
 
             userTaskRepository.save(entity);
+            /**
+             * Тут мы еще должны передать в базу данных task, что юзер изменился,
+             * ну и его надо изменить
+             */
             log.info("Пользователь сохранён или обновлён в БД: {}", userTask);
         } else {
             log.warn("Попытка сохранить некорректного пользователя: {}", userTask);
@@ -35,6 +39,10 @@ public class UserTaskServiceImpl implements UserTaskService {
 
     @Override
     public void removeUser(UUID userId) {
+        /**
+         * Тут мы еще должны передать в базу данных task, что юзера больше не существует,
+         * ну и его надо удалить
+         */
         userTaskRepository.deleteById(userId);
         log.info("Пользователь с id {} удалён из БД", userId);
     }
