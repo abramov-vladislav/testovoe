@@ -86,4 +86,11 @@ public class TaskServiceImpl implements TaskService {
 
         taskRepository.deleteTaskByTaskId(taskId);
     }
+
+//    @Override
+//    public void deleteTasksByUserId(UUID userId) {
+//        log.warn("Удаление задачи по userID: {}", userId);
+//        List<Task> tasks = getAllTasksByUserIdAsOwner(userId);
+//
+//    }
 }

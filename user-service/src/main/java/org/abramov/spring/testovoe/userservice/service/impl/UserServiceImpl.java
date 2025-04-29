@@ -103,6 +103,7 @@ public class UserServiceImpl implements UserService {
 
             UserCRUD userCRUD = UserMapper.toUserCRUD(user).setEventType(EventTypeUser.USER_DELETE);
             crudProducerUser.send(Collections.singletonList(userCRUD), EventTypeUser.USER_DELETE);
+
         } catch (UserNotFoundException e) {
             log.error("Ошибка при удалении пользователя: {}", userId, e);
             throw new UserNotFoundException("Пользователь не найден");

@@ -45,6 +45,10 @@ public class TaskRepositoryImpl implements TaskRepository {
                 LIMIT ? OFFSET ?
                 """;
 
+        /**
+         * Реализовать проверку на статус возле userID (удален ли пользователь или нет)
+         */
+
         final var args = new Object[]{userId, limit, offset};
         final var types = new int[]{Types.OTHER, Types.INTEGER, Types.INTEGER};
 
@@ -62,6 +66,9 @@ public class TaskRepositoryImpl implements TaskRepository {
                 WHERE executor_user_id = ?
                 LIMIT ? OFFSET ?
                 """;
+        /**
+         * Реализовать проверку на статус возле userID (удален ли пользователь или нет)
+         */
 
         final var args = new Object[]{userId, limit, offset};
         final var types = new int[]{Types.OTHER, Types.INTEGER, Types.INTEGER};

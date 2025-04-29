@@ -1,28 +1,28 @@
 --changeset Abramov_Vladislav:V2__create_tasks_and_userstask
 
 -- Таблица копий пользователей, которые участвуют в заданиях
-INSERT INTO task_service.user_task (user_id, username, user_last_name, user_first_name)
-VALUES ('c8f4cea7-969d-4612-b132-3f45eed22774', 'henry41', 'Иванов', 'Иван'),
-       ('eadade4e-f261-486a-bc38-aa724d2867f0', 'kevinhall', 'Смирнов', 'Алексей'),
-       ('465897b1-bb38-436d-a3e2-4993284f8770', 'jaimeking', 'Васильев', 'Роман'),
-       ('c422b5d5-5a73-4622-b901-06cb87074c10', 'sierra28', 'Попов', 'Егор'),
-       ('ca685fee-e9dc-4e23-8b08-5ad0525fcabe', 'icallahan', 'Петров', 'Петр'),
-       ('70c73137-33f3-4990-bfa4-351259882a7a', 'kimberlyhernandez', 'Новиков', 'Сергей'),
-       ('dff555c6-130a-4318-80cd-b2b38bcc5fcf', 'valerie58', 'Сидоров', 'Сидор'),
-       ('f6a0db4a-81d2-459f-99ee-22736f595e61', 'cindy79', 'Кузнецов', 'Дмитрий'),
-       ('6bc9c10c-735f-469c-b339-559320ecbbe5', 'fharmon', 'Федоров', 'Андрей'),
-       ('f1ad725e-b20b-4aa8-8ffb-ec2ba711c969', 'stevenlopez', 'Гольдман', 'Марк'),
-       ('9c1d5399-2801-4808-9310-966f0b4c1f0b', 'angelaberg', 'Левин', 'Давид'),
-       ('b5a55ea6-18b3-4b3a-b0f6-60f9d357e4e0', 'sandrafaulkner', 'Штерн', 'Владимир'),
-       ('e9fba7fe-5e10-405b-ad28-cb28c00dccba', 'vincentclark', 'Бендер', 'Эмиль'),
-       ('e96d8880-47fe-45a6-901e-1eaf8550a558', 'brent32', 'Тимуров', 'Альберт'),
-       ('44339e14-d542-402e-9ecf-4254cef0941d', 'ywarren', 'Нигматуллин', 'Рафаэль'),
-       ('85138e8c-424b-4007-8ff1-03c6140dff71', 'chopkins', 'Шарипов', 'Марат'),
-       ('54e3d30f-ece9-446d-a060-30aaf7b1ab0f', 'todd98', 'Галиев', 'Ильдар'),
-       ('266e9a3c-13d7-4772-984e-5a4c61981720', 'whitepamela', 'Ахметов', 'Рамиль'),
-       ('b45bcc2f-298d-494f-b638-c1c5ed869892', 'deborahcalhoun', 'Блюм', 'Евгений'),
-       ('3d5d3afd-27dd-4e71-bbba-33fae69295e9', 'rosspeter', 'Дубровский', 'Леонид'),
-       ('4973d4be-f162-42a4-b39a-c5b0ca040e25', 'brent32', 'Тимуров', 'Альберт');
+INSERT INTO task_service.user_task (user_id, username, user_last_name, user_first_name, user_status)
+VALUES ('c8f4cea7-969d-4612-b132-3f45eed22774', 'henry41', 'Иванов', 'Иван', 'EXIST'),
+       ('eadade4e-f261-486a-bc38-aa724d2867f0', 'kevinhall', 'Смирнов', 'Алексей', 'EXIST'),
+       ('465897b1-bb38-436d-a3e2-4993284f8770', 'jaimeking', 'Васильев', 'Роман', 'EXIST'),
+       ('c422b5d5-5a73-4622-b901-06cb87074c10', 'sierra28', 'Попов', 'Егор', 'EXIST'),
+       ('ca685fee-e9dc-4e23-8b08-5ad0525fcabe', 'icallahan', 'Петров', 'Петр', 'EXIST'),
+       ('70c73137-33f3-4990-bfa4-351259882a7a', 'kimberlyhernandez', 'Новиков', 'Сергей', 'EXIST'),
+       ('dff555c6-130a-4318-80cd-b2b38bcc5fcf', 'valerie58', 'Сидоров', 'Сидор', 'EXIST'),
+       ('f6a0db4a-81d2-459f-99ee-22736f595e61', 'cindy79', 'Кузнецов', 'Дмитрий', 'EXIST'),
+       ('6bc9c10c-735f-469c-b339-559320ecbbe5', 'fharmon', 'Федоров', 'Андрей', 'EXIST'),
+       ('f1ad725e-b20b-4aa8-8ffb-ec2ba711c969', 'stevenlopez', 'Гольдман', 'Марк', 'EXIST'),
+       ('9c1d5399-2801-4808-9310-966f0b4c1f0b', 'angelaberg', 'Левин', 'Давид', 'EXIST'),
+       ('b5a55ea6-18b3-4b3a-b0f6-60f9d357e4e0', 'sandrafaulkner', 'Штерн', 'Владимир', 'EXIST'),
+       ('e9fba7fe-5e10-405b-ad28-cb28c00dccba', 'vincentclark', 'Бендер', 'Эмиль', 'EXIST'),
+       ('e96d8880-47fe-45a6-901e-1eaf8550a558', 'brent32', 'Тимуров', 'Альберт', 'EXIST'),
+       ('44339e14-d542-402e-9ecf-4254cef0941d', 'ywarren', 'Нигматуллин', 'Рафаэль', 'EXIST'),
+       ('85138e8c-424b-4007-8ff1-03c6140dff71', 'chopkins', 'Шарипов', 'Марат', 'EXIST'),
+       ('54e3d30f-ece9-446d-a060-30aaf7b1ab0f', 'todd98', 'Галиев', 'Ильдар', 'EXIST'),
+       ('266e9a3c-13d7-4772-984e-5a4c61981720', 'whitepamela', 'Ахметов', 'Рамиль', 'EXIST'),
+       ('b45bcc2f-298d-494f-b638-c1c5ed869892', 'deborahcalhoun', 'Блюм', 'Евгений', 'EXIST'),
+       ('3d5d3afd-27dd-4e71-bbba-33fae69295e9', 'rosspeter', 'Дубровский', 'Леонид', 'EXIST'),
+       ('4973d4be-f162-42a4-b39a-c5b0ca040e25', 'brent32', 'Тимуров', 'Альберт', 'EXIST');
 
 -- Таблица заданий
 INSERT INTO task_service.tasks (task_id, task_name, owner_user_id, executor_user_id, task_status)

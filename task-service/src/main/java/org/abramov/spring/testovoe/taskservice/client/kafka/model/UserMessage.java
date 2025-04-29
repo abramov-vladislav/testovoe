@@ -16,7 +16,3 @@ public class UserMessage {
 
     private List<UserCRUD> objects;
 }
-
-/**
- * Модель для получения сообщения из Kafka
- */
