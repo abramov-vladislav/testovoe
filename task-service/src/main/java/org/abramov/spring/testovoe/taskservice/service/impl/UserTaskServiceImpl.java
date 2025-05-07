@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.abramov.spring.testovoe.taskservice.entity.UserTask;
 import org.abramov.spring.testovoe.taskservice.repository.UserTaskRepository;
+import org.abramov.spring.testovoe.taskservice.service.TaskService;
 import org.abramov.spring.testovoe.taskservice.service.UserTaskService;
 import org.springframework.stereotype.Service;
 
@@ -15,21 +16,25 @@ import java.util.UUID;
 public class UserTaskServiceImpl implements UserTaskService {
 
     private final UserTaskRepository userTaskRepository;
+    private final TaskService taskService;
 
     @Override
-    public void saveOrUpdateUser(UserTask userTask) {
+    public void updateUser(UserTask userTask) {
         if (userTask != null && userTask.getUserId() != null) {
-            UserTask entity = UserTask.builder()
+            UserTask userUpdate = UserTask.builder()
                     .userId(userTask.getUserId())
                     .username(userTask.getUsername())
                     .userFirstName(userTask.getUserFirstName())
                     .userLastName(userTask.getUserLastName())
                     .build();
 
-            userTaskRepository.save(entity);
+            userTaskRepository.updateUser(userUpdate);
             /**
-             * Тут мы еще должны передать в базу данных task, что юзер изменился
+             * Тут мы еще должны передать в базу данных task, что юзер изменился:
+             * Находим сущность юзера по айди и обновляем данные
              */
+
+
             log.info("Пользователь сохранён или обновлён в БД: {}", userTask);
         } else {
             log.warn("Попытка сохранить некорректного пользователя: {}", userTask);

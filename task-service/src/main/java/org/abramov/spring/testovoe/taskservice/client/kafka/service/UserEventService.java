@@ -44,7 +44,7 @@ public class UserEventService {
                                 .userLastName(user.getUserLastName())
                                 .build();
                         log.info("Обновляем пользователя: {}", updatedUser);
-                        userTaskService.saveOrUpdateUser(updatedUser);
+                        userTaskService.updateUser(updatedUser);
                     }
                 });
     }

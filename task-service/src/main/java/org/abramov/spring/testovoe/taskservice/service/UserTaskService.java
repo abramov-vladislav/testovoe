@@ -6,7 +6,7 @@ import java.util.UUID;
 
 public interface UserTaskService {
 
-    void saveOrUpdateUser(UserTask userTask);
+    void updateUser(UserTask userTask);
 
     void removeUser(UUID userId);
 
