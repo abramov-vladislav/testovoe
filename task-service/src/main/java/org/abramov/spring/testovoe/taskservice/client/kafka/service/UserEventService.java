@@ -25,6 +25,7 @@ public class UserEventService {
                 .forEach(user -> {
                     if (userTaskService.exists(user.getId())) {
                         log.info("Удаляем пользователя: {}", user.getId());
+
                         userTaskService.removeUser(user.getId());
                     }
                 });
@@ -44,6 +45,7 @@ public class UserEventService {
                                 .userLastName(user.getUserLastName())
                                 .build();
                         log.info("Обновляем пользователя: {}", updatedUser);
+
                         userTaskService.updateUser(updatedUser);
                     }
                 });

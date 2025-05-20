@@ -47,6 +47,7 @@ public class TaskServiceImpl implements TaskService {
 
         return taskRepository.getTaskByTaskId(taskId)
                 .orElseThrow(() -> {
+
                     log.warn("Задача с ID {} не найдена", taskId);
                     return new RuntimeException("Задание не найдено");
                 });
@@ -67,22 +68,30 @@ public class TaskServiceImpl implements TaskService {
         Task taskExisting = taskRepository.getTaskByTaskId(task.getTaskId())
                 .orElseThrow(() -> {
                     log.warn("Задача с ID {} не найдена для обновления", task.getTaskId());
+
                     return new RuntimeException("Задание не найдено");
                 });
 
-        taskExisting.setTaskName(task.getTaskName());
-        taskExisting.setTaskOwnerId(task.getTaskOwnerId());
-        taskExisting.setTaskExecutorId(task.getTaskExecutorId());
-        taskExisting.setTaskStatus(task.getTaskStatus());
-        taskExisting.setTaskCreateDate(task.getTaskCreateDate());
-        taskExisting.setTaskUpdateDate(task.getTaskUpdateDate());
+        if (!task.getTaskName().equals(taskExisting.getTaskName())
+                && taskRepository.existsTaskByTaskName(task.getTaskName())) {
+            log.warn("Имя задачи '{}' уже занято другой задачей", task.getTaskName());
+
+            throw new RuntimeException("Задача с таким именем уже существует");
+        }
+
+        taskExisting
+                .setTaskName(task.getTaskName())
+                .setTaskOwnerId(task.getTaskOwnerId())
+                .setTaskExecutorId(task.getTaskExecutorId())
+                .setTaskStatus(task.getTaskStatus())
+                .setTaskCreateDate(task.getTaskCreateDate())
+                .setTaskUpdateDate(task.getTaskUpdateDate());
+
+        log.info("Задача успешно обновлена: {}", taskExisting);
 
         return taskRepository.createTask(taskExisting);
     }
 
-    /**
-     * создать метод, в котором мы принимаем
-     */
 
     @Override
     public void deleteTask(UUID taskId) {
@@ -91,10 +100,4 @@ public class TaskServiceImpl implements TaskService {
         taskRepository.deleteTaskByTaskId(taskId);
     }
 
-//    @Override
-//    public void deleteTasksByUserId(UUID userId) {
-//        log.warn("Удаление задачи по userID: {}", userId);
-//        List<Task> tasks = getAllTasksByUserIdAsOwner(userId);
-//
-//    }
 }

@@ -66,9 +66,7 @@ public class TaskController {
     @PutMapping("/{taskId}")
     public ResponseEntity<TaskDto> updateTask(@PathVariable UUID taskId, @RequestBody UpdateTaskDto updateTaskDto) {
         final var task = taskService.updateTask(TaskMapper.toTask(taskId, updateTaskDto));
-/**
- * добавить проверку, что такого названия нет в БД
- */
+
         return ResponseEntity.ok(TaskMapper.toTaskDto(task));
     }
 

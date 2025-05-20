@@ -40,6 +40,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserByUserId(userId)
                 .orElseThrow(() -> {
                     log.warn("Пользователь с ID {} не найден", userId);
+
                     return new UserNotFoundException("Пользователь не найден");
                 });
     }
@@ -51,6 +52,7 @@ public class UserServiceImpl implements UserService {
         return userRepository.getUserByUsername(username)
                 .orElseThrow(() -> {
                     log.warn("Пользователь с username '{}' не найден", username);
+
                     return new UserNotFoundException("Пользователь не найден");
                 });
     }
@@ -88,6 +90,7 @@ public class UserServiceImpl implements UserService {
 
         User user = userRepository.createUser(UserMapper.toUser(createUserDto));
 
+        log.info("Создан новый пользователь: {}", user);
         return user;
     }
 
@@ -106,6 +109,7 @@ public class UserServiceImpl implements UserService {
 
         } catch (UserNotFoundException e) {
             log.error("Ошибка при удалении пользователя: {}", userId, e);
+
             throw new UserNotFoundException("Пользователь не найден");
         }
     }

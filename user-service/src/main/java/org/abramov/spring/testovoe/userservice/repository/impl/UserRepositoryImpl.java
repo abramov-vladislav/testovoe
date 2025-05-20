@@ -1,6 +1,7 @@
 package org.abramov.spring.testovoe.userservice.repository.impl;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.abramov.spring.testovoe.userservice.entity.User;
 import org.abramov.spring.testovoe.userservice.repository.UserRepository;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Repository;
 import java.sql.Types;
 import java.util.*;
 
+@Slf4j
 @Repository
 @RequiredArgsConstructor
 public class UserRepositoryImpl implements UserRepository {
@@ -41,7 +43,13 @@ public class UserRepositoryImpl implements UserRepository {
 
         final var users = Objects.requireNonNull(jdbcTemplate.query(sql, userExtractor, username));
 
-        return users.isEmpty() ? Optional.empty() : Optional.of(users.getFirst());
+        if (users.isEmpty()) {
+            log.info("Пользователь с username '{}' не найден", username);
+            return Optional.empty();
+        } else {
+            log.info("Пользователь с username '{}' найден: {}", username, users.getFirst());
+            return Optional.of(users.getFirst());
+        }
     }
 
     @Override
@@ -55,6 +63,7 @@ public class UserRepositoryImpl implements UserRepository {
                 """;
 
         Boolean exists = jdbcTemplate.queryForObject(sql, Boolean.class, username);
+        log.debug("Проверка существования пользователя по username '{}': {}", username, Boolean.TRUE.equals(exists));
         return Boolean.TRUE.equals(exists);
     }
 
@@ -72,7 +81,10 @@ public class UserRepositoryImpl implements UserRepository {
         final var args = new Object[]{limit, offset};
         final var types = new int[]{Types.INTEGER, Types.INTEGER};
 
-        return Objects.requireNonNull(jdbcTemplate.query(sql, args, types, userExtractor));
+        List<User> users = Objects.requireNonNull(jdbcTemplate.query(sql, args, types, userExtractor));
+
+        log.info("Получено {} пользователей (страница {}, размер {})", users.size(), pageNumber, pageSize);
+        return users;
     }
 
     @Override
@@ -85,7 +97,13 @@ public class UserRepositoryImpl implements UserRepository {
 
         final var users = Objects.requireNonNull(jdbcTemplate.query(sql, userExtractor, userId));
 
-        return users.isEmpty() ? Optional.empty() : Optional.of(users.getFirst());
+        if (users.isEmpty()) {
+            log.info("Пользователь с userId {} не найден", userId);
+            return Optional.empty();
+        } else {
+            log.info("Пользователь с userId {} найден: {}", userId, users.getFirst());
+            return Optional.of(users.getFirst());
+        }
     }
 
     @Override
@@ -101,6 +119,7 @@ public class UserRepositoryImpl implements UserRepository {
 
         jdbcTemplate.update(sql, args, types);
 
+        log.info("Создан новый пользователь: {}", user);
         return user;
     }
 
@@ -110,16 +129,13 @@ public class UserRepositoryImpl implements UserRepository {
                 DELETE FROM user_service.users
                 WHERE user_id = ?
                 """;
-        jdbcTemplate.update(sql, userId);
+        int rows = jdbcTemplate.update(sql, userId);
+
+        if (rows > 0) {
+            log.info("Пользователь с userId {} успешно удалён", userId);
+        } else {
+            log.warn("Попытка удалить пользователя с userId {}, но запись не найдена", userId);
+        }
     }
 
-    @Override
-    public boolean existsByUsername(String username) {
-        final var sql = """
-                SELECT COUNT(*) FROM user_service.users
-                WHERE username = ?
-                """;
-        Integer count = jdbcTemplate.queryForObject(sql, Integer.class, username);
-        return count != null && count > 0;
-    }
 }
